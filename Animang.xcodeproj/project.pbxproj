@@ -7,18 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CC8DF6592BA1FC1500155657 /* Manganel_AnimesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8DF6582BA1FC1500155657 /* Manganel_AnimesApp.swift */; };
+		CC8DF6592BA1FC1500155657 /* Animang.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8DF6582BA1FC1500155657 /* Animang.swift */; };
 		CC8DF65B2BA1FC1500155657 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8DF65A2BA1FC1500155657 /* ContentView.swift */; };
 		CC8DF65D2BA1FC1600155657 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC8DF65C2BA1FC1600155657 /* Assets.xcassets */; };
 		CC8DF6612BA1FC1600155657 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC8DF6602BA1FC1600155657 /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		CC8DF6552BA1FC1500155657 /* Manganel&Animes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Manganel&Animes.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CC8DF6582BA1FC1500155657 /* Manganel_AnimesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Manganel_AnimesApp.swift; sourceTree = "<group>"; };
+		CC8DF6552BA1FC1500155657 /* Animang.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Animang.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC8DF6582BA1FC1500155657 /* Animang.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animang.swift; sourceTree = "<group>"; };
 		CC8DF65A2BA1FC1500155657 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		CC8DF65C2BA1FC1600155657 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		CC8DF65E2BA1FC1600155657 /* Manganel_Animes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Manganel_Animes.entitlements; sourceTree = "<group>"; };
+		CC8DF65E2BA1FC1600155657 /* Animang.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Animang.entitlements; sourceTree = "<group>"; };
 		CC8DF6602BA1FC1600155657 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -36,7 +36,7 @@
 		CC8DF64C2BA1FC1500155657 = {
 			isa = PBXGroup;
 			children = (
-				CC8DF6572BA1FC1500155657 /* Manganel&Animes */,
+				CC8DF6572BA1FC1500155657 /* Animang */,
 				CC8DF6562BA1FC1500155657 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -44,21 +44,21 @@
 		CC8DF6562BA1FC1500155657 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CC8DF6552BA1FC1500155657 /* Manganel&Animes.app */,
+				CC8DF6552BA1FC1500155657 /* Animang.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		CC8DF6572BA1FC1500155657 /* Manganel&Animes */ = {
+		CC8DF6572BA1FC1500155657 /* Animang */ = {
 			isa = PBXGroup;
 			children = (
-				CC8DF6582BA1FC1500155657 /* Manganel_AnimesApp.swift */,
+				CC8DF6582BA1FC1500155657 /* Animang.swift */,
 				CC8DF65A2BA1FC1500155657 /* ContentView.swift */,
 				CC8DF65C2BA1FC1600155657 /* Assets.xcassets */,
-				CC8DF65E2BA1FC1600155657 /* Manganel_Animes.entitlements */,
+				CC8DF65E2BA1FC1600155657 /* Animang.entitlements */,
 				CC8DF65F2BA1FC1600155657 /* Preview Content */,
 			);
-			path = "Manganel&Animes";
+			path = Animang;
 			sourceTree = "<group>";
 		};
 		CC8DF65F2BA1FC1600155657 /* Preview Content */ = {
@@ -72,9 +72,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		CC8DF6542BA1FC1500155657 /* Manganel&Animes */ = {
+		CC8DF6542BA1FC1500155657 /* Animang */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CC8DF6642BA1FC1600155657 /* Build configuration list for PBXNativeTarget "Manganel&Animes" */;
+			buildConfigurationList = CC8DF6642BA1FC1600155657 /* Build configuration list for PBXNativeTarget "Animang" */;
 			buildPhases = (
 				CC8DF6512BA1FC1500155657 /* Sources */,
 				CC8DF6522BA1FC1500155657 /* Frameworks */,
@@ -84,9 +84,9 @@
 			);
 			dependencies = (
 			);
-			name = "Manganel&Animes";
+			name = Animang;
 			productName = "Manganel&Animes";
-			productReference = CC8DF6552BA1FC1500155657 /* Manganel&Animes.app */;
+			productReference = CC8DF6552BA1FC1500155657 /* Animang.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -104,7 +104,7 @@
 					};
 				};
 			};
-			buildConfigurationList = CC8DF6502BA1FC1500155657 /* Build configuration list for PBXProject "Manganel&Animes" */;
+			buildConfigurationList = CC8DF6502BA1FC1500155657 /* Build configuration list for PBXProject "Animang" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -117,7 +117,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				CC8DF6542BA1FC1500155657 /* Manganel&Animes */,
+				CC8DF6542BA1FC1500155657 /* Animang */,
 			);
 		};
 /* End PBXProject section */
@@ -140,7 +140,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CC8DF65B2BA1FC1500155657 /* ContentView.swift in Sources */,
-				CC8DF6592BA1FC1500155657 /* Manganel_AnimesApp.swift in Sources */,
+				CC8DF6592BA1FC1500155657 /* Animang.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,14 +266,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "Manganel&Animes/Manganel_Animes.entitlements";
+				CODE_SIGN_ENTITLEMENTS = Animang/Animang.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Manganel&Animes/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Animang/Preview Content\"";
 				DEVELOPMENT_TEAM = G5VVBGL99L;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Animang/info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -289,7 +290,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.4;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.manelzaum.Manganel-Animes";
+				PRODUCT_BUNDLE_IDENTIFIER = com.manel.Animang;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -304,14 +305,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "Manganel&Animes/Manganel_Animes.entitlements";
+				CODE_SIGN_ENTITLEMENTS = Animang/Animang.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Manganel&Animes/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Animang/Preview Content\"";
 				DEVELOPMENT_TEAM = G5VVBGL99L;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Animang/info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -327,7 +329,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.4;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.manelzaum.Manganel-Animes";
+				PRODUCT_BUNDLE_IDENTIFIER = com.manel.Animang;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -340,7 +342,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		CC8DF6502BA1FC1500155657 /* Build configuration list for PBXProject "Manganel&Animes" */ = {
+		CC8DF6502BA1FC1500155657 /* Build configuration list for PBXProject "Animang" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CC8DF6622BA1FC1600155657 /* Debug */,
@@ -349,7 +351,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CC8DF6642BA1FC1600155657 /* Build configuration list for PBXNativeTarget "Manganel&Animes" */ = {
+		CC8DF6642BA1FC1600155657 /* Build configuration list for PBXNativeTarget "Animang" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CC8DF6652BA1FC1600155657 /* Debug */,
