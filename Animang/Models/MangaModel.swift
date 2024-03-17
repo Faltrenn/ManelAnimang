@@ -8,14 +8,14 @@
 import Foundation
 
 
-struct Manga {
+struct Manga: Hashable {
     let name: String
     let image: String
     let chapters: [Chapter]
     var lastRead: Chapter?
 }
 
-struct Chapter {
+struct Chapter: Hashable{
     let name: String
     let images: [String]
     let read: Bool = false
