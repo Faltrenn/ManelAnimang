@@ -52,7 +52,6 @@ struct Test : View {
                 }
             }
         }
-        .frame(width: 300, height: 500)
         .onAppear {
             vm.addManga(link: "https://lermanga.org/mangas/gods-gambit/")
         }

@@ -8,12 +8,28 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var page: TabbedPages = .manga
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        ZStack(alignment: .bottom){
+            ZStack {
+                switch page {
+                case .manga:
+                    Text("Manga")
+                case .anime:
+                    Text("Anime")
+                }
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            HStack {
+                ForEach(TabbedPages.allCases, id: \.self) { p in
+                    Button {
+                        page = p
+                    } label: {
+                        Text(p.title)
+                    }
+                }
+            }
         }
         .padding()
     }
