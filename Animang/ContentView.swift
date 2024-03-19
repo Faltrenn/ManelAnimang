@@ -15,7 +15,7 @@ struct ContentView: View {
             ZStack {
                 switch page {
                 case .manga:
-                    Text("Manga")
+                    MangaHomeView()
                 case .anime:
                     Text("Anime")
                 }
@@ -32,6 +32,7 @@ struct ContentView: View {
             }
         }
         .padding()
+        .ignoresSafeArea(edges: [.bottom])
     }
 }
 
