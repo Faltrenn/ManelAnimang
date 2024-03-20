@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		CC12E30A2BA8D06A00F1C087 /* MangaHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC12E3092BA8D06A00F1C087 /* MangaHomeView.swift */; };
+		CC2684C82BAB7993008A6040 /* MangaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2684C72BAB7993008A6040 /* MangaView.swift */; };
 		CC77C47F2BA660A000A2F6C4 /* MangaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC77C47E2BA660A000A2F6C4 /* MangaViewModel.swift */; };
 		CC77C4822BA665EE00A2F6C4 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = CC77C4812BA665EE00A2F6C4 /* SwiftSoup */; };
 		CC77C4842BA76A1F00A2F6C4 /* TabbedPagesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC77C4832BA76A1F00A2F6C4 /* TabbedPagesModel.swift */; };
@@ -21,6 +22,7 @@
 
 /* Begin PBXFileReference section */
 		CC12E3092BA8D06A00F1C087 /* MangaHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaHomeView.swift; sourceTree = "<group>"; };
+		CC2684C72BAB7993008A6040 /* MangaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaView.swift; sourceTree = "<group>"; };
 		CC77C47E2BA660A000A2F6C4 /* MangaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaViewModel.swift; sourceTree = "<group>"; };
 		CC77C4832BA76A1F00A2F6C4 /* TabbedPagesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbedPagesModel.swift; sourceTree = "<group>"; };
 		CC79DA142BA63D9A00200F8B /* MangaModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaModel.swift; sourceTree = "<group>"; };
@@ -50,6 +52,7 @@
 			children = (
 				CC12E3092BA8D06A00F1C087 /* MangaHomeView.swift */,
 				CC9EFB8E2BA91B5700FC6B0E /* MangaCardView.swift */,
+				CC2684C72BAB7993008A6040 /* MangaView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -179,6 +182,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CC8DF65B2BA1FC1500155657 /* ContentView.swift in Sources */,
+				CC2684C82BAB7993008A6040 /* MangaView.swift in Sources */,
 				CC79DA152BA63D9A00200F8B /* MangaModel.swift in Sources */,
 				CC8DF6592BA1FC1500155657 /* Animang.swift in Sources */,
 				CC12E30A2BA8D06A00F1C087 /* MangaHomeView.swift in Sources */,

@@ -21,7 +21,7 @@ struct MangaHomeView: View {
                 LazyVGrid(columns: columns) {
                     ForEach(mangaVM.mangas, id: \.self) { manga in
                         NavigationLink {
-                            Text("MangaView")
+                            MangaView(manga: manga)
                         } label: {
                             MangaCardView(manga: manga)
                         }
