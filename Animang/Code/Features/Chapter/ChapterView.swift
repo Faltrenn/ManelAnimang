@@ -16,23 +16,25 @@ struct ChapterView: View {
     
     var body: some View {
         ScrollView {
-            if loadedImages.count > 0 {
-                ForEach(loadedImages, id: \.self) { link in
-                    AsyncImage(url: URL(string: link)) { image in
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .onAppear {
-                                if images.count > 0 {
-                                    loadedImages.append(images.removeFirst())
+            VStack(spacing: 0) {
+                if loadedImages.count > 0 {
+                    ForEach(loadedImages, id: \.self) { link in
+                        AsyncImage(url: URL(string: link)) { image in
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .onAppear {
+                                    if images.count > 0 {
+                                        loadedImages.append(images.removeFirst())
+                                    }
                                 }
-                            }
-                    } placeholder: {
-                        ProgressView()
+                        } placeholder: {
+                            ProgressView()
+                        }
                     }
+                } else {
+                    ProgressView()
                 }
-            } else {
-                ProgressView()
             }
         }
         .onAppear {

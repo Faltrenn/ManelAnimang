@@ -44,7 +44,6 @@ struct ContentView: View {
                 }
             }
         }
-        .padding()
         .ignoresSafeArea(edges: [.bottom])
     }
 }
