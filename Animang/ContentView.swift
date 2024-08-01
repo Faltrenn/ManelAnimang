@@ -7,22 +7,35 @@
 
 import SwiftUI
 
+enum Pages: CaseIterable {
+    case manga, anime
+    
+    var title: String {
+        switch self {
+        case .manga:
+            "Manga"
+        case .anime:
+            "Anime"
+        }
+    }
+}
+
 struct ContentView: View {
-    @State var page: TabbedPages = .manga
+    @State var page: Pages = .manga
     
     var body: some View {
         ZStack(alignment: .bottom){
             ZStack {
                 switch page {
                 case .manga:
-                    MangaHomeView()
+                    Text("Manga")
                 case .anime:
                     Text("Anime")
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             HStack {
-                ForEach(TabbedPages.allCases, id: \.self) { p in
+                ForEach(Pages.allCases, id: \.self) { p in
                     Button {
                         page = p
                     } label: {
