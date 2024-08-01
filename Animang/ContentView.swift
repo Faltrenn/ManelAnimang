@@ -28,7 +28,7 @@ struct ContentView: View {
             ZStack {
                 switch page {
                 case .manga:
-                    Text("Manga")
+                    ChapterView()
                 case .anime:
                     Text("Anime")
                 }
