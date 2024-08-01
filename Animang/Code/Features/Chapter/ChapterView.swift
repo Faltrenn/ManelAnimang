@@ -11,22 +11,24 @@ import SwiftSoup
 struct ChapterView: View {
     let link: String = "https://lermangas.me/manga/solo-leveling/capitulo-139/"
     @State var images: [String] = []
+    @State var loadedImages: [String] = []
     @State var imageIndex: Int = 0
     
     var body: some View {
         ScrollView {
-            if images.count > 0 {
-                ForEach(images, id: \.self) { link in
-                    AsyncImage(url: URL(string: link)) { phase in
-                        if let image = phase.image {
-                            image
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                        } else if phase.error != nil {
-                            Color.red // Indicates an error.
-                        } else {
-                            Color.blue // Acts as a placeholder.
-                        }
+            if loadedImages.count > 0 {
+                ForEach(loadedImages, id: \.self) { link in
+                    AsyncImage(url: URL(string: link)) { image in
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .onAppear {
+                                if images.count > 0 {
+                                    loadedImages.append(images.removeFirst())
+                                }
+                            }
+                    } placeholder: {
+                        ProgressView()
                     }
                 }
             } else {
@@ -43,6 +45,9 @@ struct ChapterView: View {
                             let fetchedImages = try elements.map { try $0.attr("src").trimmingCharacters(in: .whitespacesAndNewlines) }
                             DispatchQueue.main.async {
                                 images = fetchedImages
+                                if !images.isEmpty {
+                                    loadedImages.append(images.removeFirst())
+                                }
                             }
                         } catch {
                             print("ERROR: ", error)
