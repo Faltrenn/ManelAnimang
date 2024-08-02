@@ -29,9 +29,12 @@ struct MangaView: View {
                 Text(mangaDescription)
                 
                 ForEach(mangaChapters, id: \.self) { chapterLink in
-                    Text(chapterLink)
+                    NavigationLink {
+                        ChapterView(chapterLink: chapterLink)
+                    } label: {
+                        Text(chapterLink)
+                    }
                 }
-                
             }
         }
         .onAppear {
@@ -62,5 +65,7 @@ struct MangaView: View {
 }
 
 #Preview {
-    MangaView(mangaLink: "https://lermangas.me/manga/o-cacador-de-destinos-rank-f/")
+    NavigationStack {
+        MangaView(mangaLink: "https://lermangas.me/manga/o-cacador-de-destinos-rank-f/")
+    }
 }

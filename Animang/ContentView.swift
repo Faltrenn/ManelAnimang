@@ -26,11 +26,13 @@ struct ContentView: View {
     var body: some View {
         ZStack(alignment: .bottom){
             ZStack {
-                switch page {
-                case .manga:
-                    ChapterView(chapterLink: "https://lermangas.me/manga/solo-leveling/capitulo-139/")
-                case .anime:
-                    Text("Anime")
+                NavigationStack {
+                    switch page {
+                    case .manga:
+                        MangaView(mangaLink: "https://lermangas.me/manga/o-cacador-de-destinos-rank-f/")
+                    case .anime:
+                        Text("Anime")
+                    }
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
