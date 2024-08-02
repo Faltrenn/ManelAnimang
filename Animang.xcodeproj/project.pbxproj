@@ -8,15 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		CC77C4822BA665EE00A2F6C4 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = CC77C4812BA665EE00A2F6C4 /* SwiftSoup */; };
+		CC7C16832C5D323900BF6CF7 /* MangaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7C16822C5D323900BF6CF7 /* MangaView.swift */; };
 		CC8DF6592BA1FC1500155657 /* Animang.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8DF6582BA1FC1500155657 /* Animang.swift */; };
 		CC8DF65B2BA1FC1500155657 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8DF65A2BA1FC1500155657 /* ContentView.swift */; };
 		CC8DF65D2BA1FC1600155657 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC8DF65C2BA1FC1600155657 /* Assets.xcassets */; };
 		CC8DF6612BA1FC1600155657 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC8DF6602BA1FC1600155657 /* Preview Assets.xcassets */; };
 		CCFAB71C2C5C1D4800D58EF8 /* ChapterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCFAB71B2C5C1D4800D58EF8 /* ChapterView.swift */; };
-		CCFAB71E2C5C1D5200D58EF8 /* ChapterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCFAB71D2C5C1D5200D58EF8 /* ChapterModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CC7C16822C5D323900BF6CF7 /* MangaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaView.swift; sourceTree = "<group>"; };
 		CC8DF6552BA1FC1500155657 /* Animang.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Animang.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC8DF6582BA1FC1500155657 /* Animang.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animang.swift; sourceTree = "<group>"; };
 		CC8DF65A2BA1FC1500155657 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -24,7 +25,6 @@
 		CC8DF65E2BA1FC1600155657 /* Animang.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Animang.entitlements; sourceTree = "<group>"; };
 		CC8DF6602BA1FC1600155657 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		CCFAB71B2C5C1D4800D58EF8 /* ChapterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterView.swift; sourceTree = "<group>"; };
-		CCFAB71D2C5C1D5200D58EF8 /* ChapterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +39,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CC7C16812C5D322600BF6CF7 /* Manga */ = {
+			isa = PBXGroup;
+			children = (
+				CC7C16822C5D323900BF6CF7 /* MangaView.swift */,
+			);
+			path = Manga;
+			sourceTree = "<group>";
+		};
 		CC8DF64C2BA1FC1500155657 = {
 			isa = PBXGroup;
 			children = (
@@ -79,6 +87,7 @@
 		CCFAB7102C5C1AC900D58EF8 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				CC7C16812C5D322600BF6CF7 /* Manga */,
 				CCFAB7192C5C1D2A00D58EF8 /* Chapter */,
 			);
 			path = Features;
@@ -96,7 +105,6 @@
 			isa = PBXGroup;
 			children = (
 				CCFAB71B2C5C1D4800D58EF8 /* ChapterView.swift */,
-				CCFAB71D2C5C1D5200D58EF8 /* ChapterModel.swift */,
 			);
 			path = Chapter;
 			sourceTree = "<group>";
@@ -178,7 +186,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CC8DF65B2BA1FC1500155657 /* ContentView.swift in Sources */,
-				CCFAB71E2C5C1D5200D58EF8 /* ChapterModel.swift in Sources */,
+				CC7C16832C5D323900BF6CF7 /* MangaView.swift in Sources */,
 				CC8DF6592BA1FC1500155657 /* Animang.swift in Sources */,
 				CCFAB71C2C5C1D4800D58EF8 /* ChapterView.swift in Sources */,
 			);

@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftSoup
 
 struct ChapterView: View {
-    let link: String = "https://lermangas.me/manga/solo-leveling/capitulo-139/"
+    let chapterLink: String
     @State var images: [String] = []
     @State var loadedImages: [String] = []
     @State var imageIndex: Int = 0
@@ -24,7 +24,7 @@ struct ChapterView: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .onAppear {
-                                    if images.count > 0 {
+                                    if !images.isEmpty {
                                         loadedImages.append(images.removeFirst())
                                     }
                                 }
@@ -38,7 +38,7 @@ struct ChapterView: View {
             }
         }
         .onAppear {
-            if let url = URL(string: link) {
+            if let url = URL(string: chapterLink) {
                 URLSession.shared.dataTask(with: url) { data, response, error in
                     if let data = data, let html = String(data: data, encoding: .utf8), error == nil {
                         do {
@@ -64,5 +64,5 @@ struct ChapterView: View {
 }
 
 #Preview {
-    ChapterView()
+    ChapterView(chapterLink: "https://lermangas.me/manga/solo-leveling/capitulo-139/")
 }
