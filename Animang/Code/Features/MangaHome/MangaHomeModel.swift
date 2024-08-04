@@ -9,6 +9,12 @@ import Foundation
 
 struct Manga {
     let name: String
-    let link: String
+    let altName: String
     let imageLink: String
+    let link: String
+    var genres: [String]
+    let status: String
+    let launch: String
+    let lastChapter: String
+    let score: String
 }

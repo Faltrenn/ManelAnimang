@@ -8,12 +8,6 @@
 import SwiftUI
 import SwiftSoup
 
-struct Manga {
-    let name: String
-    let link: String
-    let imageLink: String
-}
-
 struct MangaHomeView: View {
     @State var links = [
         "https://lermangas.me/manga/solo-leveling/",
