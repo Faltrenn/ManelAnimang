@@ -8,6 +8,29 @@
 import SwiftUI
 import SwiftSoup
 
+struct MangaCard: View {
+    let manga: Manga
+    
+    var body: some View {
+        VStack {
+            Text(manga.name)
+            Text(manga.altName)
+            Text(manga.genres)
+            Text(manga.lastChapter)
+            Text(manga.launch)
+            Text(manga.status)
+            Text(manga.score)
+            AsyncImage(url: URL(string: manga.imageLink)) { image in
+                image
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+            } placeholder: {
+                ProgressView()
+            }
+        }
+    }
+}
+
 struct MangaHomeView: View {
     @State var links = [
         "https://lermangas.me/manga/solo-leveling/",
@@ -33,22 +56,7 @@ struct MangaHomeView: View {
                             NavigationLink {
                                 MangaView(mangaLink: manga.link)
                             } label: {
-                                VStack {
-                                    Text(manga.name)
-                                    Text(manga.altName)
-                                    Text(manga.genres)
-                                    Text(manga.lastChapter)
-                                    Text(manga.launch)
-                                    Text(manga.status)
-                                    Text(manga.score)
-                                    AsyncImage(url: URL(string: manga.imageLink)) { image in
-                                        image
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fill)
-                                    } placeholder: {
-                                        ProgressView()
-                                    }
-                                }
+                                MangaCard(manga: manga)
                             }
                         }
                     }
