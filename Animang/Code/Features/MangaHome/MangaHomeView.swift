@@ -32,14 +32,6 @@ struct MangaCard: View {
 }
 
 struct MangaHomeView: View {
-    @State var links = [
-        "https://lermangas.me/manga/solo-leveling/",
-        "https://lermangas.me/manga/eu-pertenco-a-familia-castielo/",
-        "https://lermangas.me/manga/uma-princesa-que-le-a-sorte/",
-        "https://lermangas.me/manga/reencarnando-como-o-herdeiro-louco/",
-        "https://lermangas.me/manga/acima-de-todos-os-deuses/"
-    ]
-    
     @EnvironmentObject var mangaHomeVM: MangaHomeViewModel
     
     var body: some View {
@@ -53,12 +45,10 @@ struct MangaHomeView: View {
             ScrollView {
                 VStack {
                     ForEach(mangaHomeVM.mangas, id: \.link) { manga in
-                        VStack {
-                            NavigationLink {
-                                MangaView(mangaLink: manga.link)
-                            } label: {
-                                MangaCard(manga: manga)
-                            }
+                        NavigationLink {
+                            MangaView(mangaLink: manga.link)
+                        } label: {
+                            MangaCard(manga: manga)
                         }
                     }
                 }
