@@ -8,26 +8,73 @@
 import SwiftUI
 import SwiftSoup
 
+struct HNamerTag: View {
+    let title: String
+    let value: String
+    
+    init(_ title: String, _ value: String) {
+        self.title = title
+        self.value = value
+    }
+    
+    var body: some View {
+        HStack {
+            Text(title)
+                .bold()
+            Text(value)
+        }
+        .multilineTextAlignment(.leading)
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+}
+
 struct MangaView: View {
     let mangaLink: String
     @State var mangaTitle: String = ""
     @State var mangaImage: String = ""
     @State var mangaDescription: String = ""
     @State var mangaChapters: [Chapter] = []
+    @State var rotation = 0.0
     
     var body: some View {
         ScrollView {
             VStack {
                 Text(mangaTitle)
+                    .font(.title)
+                    .bold()
+                    .multilineTextAlignment(.center)
                 AsyncImage(url: URL(string: mangaImage)) { image in
                     image
                         .resizable()
                         .aspectRatio(contentMode: .fill)
+                        .clipShape(RoundedRectangle(cornerRadius: 25.0))
                 } placeholder: {
                     ProgressView()
                 }
-                Text(mangaDescription)
+                VStack {
+                    Text(mangaDescription)
+                }
+                .padding()
+                .background(Color(red: 31/255, green: 31/255, blue: 36/255))
+                .clipShape(RoundedRectangle(cornerRadius: 25.0))
                 
+                HStack {
+                    Text("ÚLTIMOS CAPÍTULOS LANÇADOS")
+                    Image(systemName: "arrow.up.arrow.down")
+                        .rotationEffect(.degrees(rotation))
+                        .onTapGesture {
+                            print("?")
+                            withAnimation(.linear(duration: 0.3)) {
+                                rotation += 180
+                            }
+                        }
+                }
+                    .bold()
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color(red: 21/255, green: 22/255, blue: 29/255))
+                    .clipShape(RoundedRectangle(cornerRadius: 25.0))
+
                 ForEach(mangaChapters, id: \.link) { chapter in
                     NavigationLink {
                         ChapterView(chapterLink: chapter.link)
@@ -36,6 +83,7 @@ struct MangaView: View {
                     }
                 }
             }
+            .padding()
         }
         .onAppear {
             if let url = URL(string: mangaLink) {
