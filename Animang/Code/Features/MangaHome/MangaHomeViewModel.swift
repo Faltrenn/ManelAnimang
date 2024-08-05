@@ -22,8 +22,8 @@ class MangaHomeViewModel: ObservableObject {
                         let imageLink = try parse.select("div[class=summary_image] a img").first()?.attr("src") ?? ""
                         let genres = try parse.select("div[class=genres-content]").first()?.text() ?? ""
                         let postStatus = try parse.select("div[class=post-status] div div[class=summary-content]")
-                        let status = try postStatus[0].text()
-                        let launch = try postStatus[1].text()
+                        let launch = try postStatus[0].text()
+                        let status = try postStatus[1].text()
                         let score = try parse.select("div[class=post-total-rating allow_vote] div[class=score font-meta total_votes]").text()
                         DispatchQueue.main.async {
                             self.mangas.append(Manga(name: name, altName: altName, imageLink: imageLink, link: link, genres: genres, status: status, launch: launch, lastChapter: "none", score: score))
