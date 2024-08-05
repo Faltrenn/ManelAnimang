@@ -11,6 +11,7 @@ import SwiftSoup
 struct MangaSearchView: View {
     @State var mangas: [Manga] = []
     @State var search: String = ""
+    @EnvironmentObject var mangaHomeVM: MangaHomeViewModel
     
     var body: some View {
         VStack {
@@ -23,6 +24,16 @@ struct MangaSearchView: View {
             ScrollView {
                 ForEach(mangas, id: \.link) { manga in
                     MangaCard(manga: manga)
+                        .overlay {
+                            Button("+") {
+                                mangaHomeVM.addManga(link: manga.link)
+                            }
+                            .font(.title)
+                            .foregroundStyle(.black)
+                            .frame(width: 50, height: 50)
+                            .background(.blue)
+                            .clipShape(Circle())
+                        }
                 }
             }
         }
@@ -67,4 +78,5 @@ extension String {
 
 #Preview {
     MangaSearchView()
+        .environmentObject(MangaHomeViewModel())
 }

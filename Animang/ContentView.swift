@@ -29,11 +29,12 @@ struct ContentView: View {
                 NavigationStack {
                     switch page {
                     case .manga:
-                        MangaView(mangaLink: "https://lermangas.me/manga/o-cacador-de-destinos-rank-f/")
+                        MangaHomeView()
                     case .anime:
                         Text("Anime")
                     }
                 }
+                .environmentObject(MangaHomeViewModel())
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             HStack {

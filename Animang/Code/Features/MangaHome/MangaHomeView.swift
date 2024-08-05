@@ -40,15 +40,16 @@ struct MangaHomeView: View {
         "https://lermangas.me/manga/acima-de-todos-os-deuses/"
     ]
     
-    @ObservedObject var mangaHomeVM = MangaHomeViewModel()
+    @EnvironmentObject var mangaHomeVM: MangaHomeViewModel
     
     var body: some View {
         VStack {
-            Button("Adicionar") {
-                if !links.isEmpty {
-                    mangaHomeVM.addManga(link: links.removeFirst())
-                }
+            NavigationLink {
+                MangaSearchView()
+            } label: {
+                Text("Adicionar")
             }
+
             ScrollView {
                 VStack {
                     ForEach(mangaHomeVM.mangas, id: \.link) { manga in
@@ -70,4 +71,5 @@ struct MangaHomeView: View {
     NavigationStack {
         MangaHomeView()
     }
+    .environmentObject(MangaHomeViewModel())
 }
