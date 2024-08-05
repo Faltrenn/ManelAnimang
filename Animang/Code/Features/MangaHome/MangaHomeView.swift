@@ -35,6 +35,7 @@ struct MangaCard: View {
         VStack {
             Text(manga.name)
                 .font(.title2)
+                .bold()
             HStack(alignment: .top) {
                 VStack {
                     AsyncImage(url: URL(string: manga.imageLink)) { image in
@@ -88,6 +89,7 @@ struct MangaHomeView: View {
             }
         }
         .padding()
+        .tint(.primary)
         .onAppear {
             mangaHomeVM.addManga(link: "https://lermangas.me/manga/a-monster-hunter-becomes-a-princess/")
         }
@@ -98,6 +100,5 @@ struct MangaHomeView: View {
     NavigationStack {
         MangaHomeView()
     }
-    .tint(.primary)
     .environmentObject(MangaHomeViewModel())
 }
