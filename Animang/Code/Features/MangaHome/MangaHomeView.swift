@@ -8,6 +8,26 @@
 import SwiftUI
 import SwiftSoup
 
+struct NamerTag: View {
+    let title: String
+    let value: String
+    
+    init(_ title: String, _ value: String) {
+        self.title = title
+        self.value = value
+    }
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text(title)
+                .bold()
+            Text(value)
+        }
+        .multilineTextAlignment(.leading)
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+}
+
 struct MangaCard: View {
     let manga: Manga
     
@@ -54,6 +74,10 @@ struct MangaHomeView: View {
                 }
             }
         }
+        .padding()
+        .onAppear {
+            mangaHomeVM.addManga(link: "https://lermangas.me/manga/a-monster-hunter-becomes-a-princess/")
+        }
     }
 }
 
@@ -61,5 +85,6 @@ struct MangaHomeView: View {
     NavigationStack {
         MangaHomeView()
     }
+    .tint(.primary)
     .environmentObject(MangaHomeViewModel())
 }
