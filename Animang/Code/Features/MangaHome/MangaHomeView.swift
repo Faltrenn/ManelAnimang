@@ -34,18 +34,31 @@ struct MangaCard: View {
     var body: some View {
         VStack {
             Text(manga.name)
-            Text(manga.altName)
-            Text(manga.genres)
-            Text(manga.lastChapter)
-            Text(manga.launch)
-            Text(manga.status)
-            Text(manga.score)
-            AsyncImage(url: URL(string: manga.imageLink)) { image in
-                image
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            } placeholder: {
-                ProgressView()
+                .font(.title2)
+            HStack(alignment: .top) {
+                VStack {
+                    AsyncImage(url: URL(string: manga.imageLink)) { image in
+                        image
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 150, height: 216)
+                    } placeholder: {
+                        ProgressView()
+                    }
+                }
+                VStack(alignment: .leading) {
+                    NamerTag("Nome alternativo", manga.altName)
+                    NamerTag("Gêneros", manga.genres)
+                    NamerTag("Último capítulo", manga.lastChapter)
+                    NamerTag("Status", manga.status)
+                    NamerTag("Lançamento", manga.launch)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .padding(10)
+                .font(.subheadline)
+                .background(Color(red: 21/255, green: 22/255, blue: 29/255))
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .multilineTextAlignment(.leading)
             }
         }
     }
