@@ -8,26 +8,6 @@
 import SwiftUI
 import SwiftSoup
 
-struct HNamerTag: View {
-    let title: String
-    let value: String
-    
-    init(_ title: String, _ value: String) {
-        self.title = title
-        self.value = value
-    }
-    
-    var body: some View {
-        HStack {
-            Text(title)
-                .bold()
-            Text(value)
-        }
-        .multilineTextAlignment(.leading)
-        .frame(maxWidth: .infinity, alignment: .leading)
-    }
-}
-
 struct MangaView: View {
     let mangaLink: String
     @State var mangaTitle: String = ""
