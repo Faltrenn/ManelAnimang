@@ -48,8 +48,7 @@ struct MangaView: View {
                     Image(systemName: "arrow.up.arrow.down")
                         .rotationEffect(.degrees(rotation))
                         .onTapGesture {
-                            print("?")
-                            withAnimation(.linear(duration: 0.3)) {
+                            withAnimation(.linear(duration: 0.15)) {
                                 rotation += 180
                             }
                         }
