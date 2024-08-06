@@ -49,7 +49,12 @@ struct MangaView: View {
                         .aspectRatio(contentMode: .fill)
                         .clipShape(RoundedRectangle(cornerRadius: 25.0))
                 } placeholder: {
-                    ProgressView()
+                    RoundedRectangle(cornerRadius: 25.0)
+                        .fill(Color(red: 31/255, green: 31/255, blue: 36/255))
+                        .aspectRatio(425/615, contentMode: .fill)
+                        .overlay {
+                            ProgressView()
+                        }
                 }
                 VStack {
                     Text(mangaDescription)
