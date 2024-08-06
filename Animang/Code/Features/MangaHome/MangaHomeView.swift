@@ -76,19 +76,23 @@ struct MangaHomeView: View {
                 Text("Adicionar")
             }
 
-            ScrollView {
-                VStack {
-                    ForEach(mangaHomeVM.mangas, id: \.link) { manga in
-                        NavigationLink {
-                            MangaView(mangaLink: manga.link)
-                        } label: {
-                            MangaCard(manga: manga)
-                        }
+            List {
+                ForEach(mangaHomeVM.mangas, id: \.link) { manga in
+                    ZStack {
+                        NavigationLink(destination: MangaView(mangaLink: manga.link)) { EmptyView() }.opacity(0.0)
+                        MangaCard(manga: manga)
+                            .swipeActions {
+                                Button("Remover", systemImage: "trash") {
+                                    mangaHomeVM.addManga(link: manga.link)
+                                }
+                                .tint(.red)
+                            }
                     }
+                    .listRowSeparator(.hidden)
                 }
             }
+            .listStyle(.plain)
         }
-        .padding()
         .tint(.primary)
     }
 }

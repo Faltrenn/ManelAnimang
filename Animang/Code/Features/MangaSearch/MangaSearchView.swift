@@ -25,7 +25,6 @@ struct MangaSearchView: View {
             List {
                 ForEach(mangas, id: \.link) { manga in
                     MangaCard(manga: manga)
-                        .listRowBackground(Color.clear)
                         .listRowSeparator(.hidden)
                         .swipeActions(edge: .leading) {
                             Button("Adicionar", systemImage: "plus.circle.fill") {
@@ -35,14 +34,15 @@ struct MangaSearchView: View {
                         }
                 }
             }
+            .listStyle(.plain)
         }
-        .padding(0)
         .onAppear {
             searchManga(search: search)
         }
     }
     
     func searchManga(search: String) {
+        mangas = []
         if let url = URL(string: "https://lermangas.me/?s=\(search.searchFormat)&post_type=wp-manga") {
             URLSession.shared.dataTask(with: url) { data, response, error in
                 if error == nil, let data = data, let html = String(data: data, encoding: .utf8) {
