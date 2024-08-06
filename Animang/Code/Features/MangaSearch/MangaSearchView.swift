@@ -10,7 +10,7 @@ import SwiftSoup
 
 struct MangaSearchView: View {
     @State var mangas: [Manga] = []
-    @State var search: String = ""
+    @State var search: String = "jujutsu"
     @EnvironmentObject var mangaHomeVM: MangaHomeViewModel
     
     var body: some View {

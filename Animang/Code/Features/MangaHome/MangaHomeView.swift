@@ -90,9 +90,6 @@ struct MangaHomeView: View {
         }
         .padding()
         .tint(.primary)
-        .onAppear {
-            mangaHomeVM.addManga(link: "https://lermangas.me/manga/a-monster-hunter-becomes-a-princess/")
-        }
     }
 }
 
