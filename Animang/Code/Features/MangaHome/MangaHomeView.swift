@@ -83,7 +83,7 @@ struct MangaHomeView: View {
                         MangaCard(manga: manga)
                             .swipeActions {
                                 Button("Remover", systemImage: "trash") {
-                                    mangaHomeVM.addManga(link: manga.link)
+                                    mangaHomeVM.removeManga(manga: manga)
                                 }
                                 .tint(.red)
                             }

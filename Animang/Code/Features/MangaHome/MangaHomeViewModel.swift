@@ -35,4 +35,10 @@ class MangaHomeViewModel: ObservableObject {
             }.resume()
         }
     }
+    
+    func removeManga(manga: Manga) {
+        if let index = mangas.firstIndex(where: { $0.link == manga.link }) {
+            mangas.remove(at: index)
+        }
+    }
 }
