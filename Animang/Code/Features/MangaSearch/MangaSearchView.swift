@@ -21,23 +21,25 @@ struct MangaSearchView: View {
                     searchManga(search: search)
                 }
             }
-            ScrollView {
+            .padding()
+            List {
                 ForEach(mangas, id: \.link) { manga in
                     MangaCard(manga: manga)
-                        .overlay {
-                            Button("+") {
+                        .listRowBackground(Color.clear)
+                        .listRowSeparator(.hidden)
+                        .swipeActions(edge: .leading) {
+                            Button("Adicionar", systemImage: "plus.circle.fill") {
                                 mangaHomeVM.addManga(link: manga.link)
                             }
-                            .font(.title)
-                            .foregroundStyle(.black)
-                            .frame(width: 50, height: 50)
-                            .background(.blue)
-                            .clipShape(Circle())
+                            .tint(.green)
                         }
                 }
             }
         }
-        .padding()
+        .padding(0)
+        .onAppear {
+            searchManga(search: search)
+        }
     }
     
     func searchManga(search: String) {
