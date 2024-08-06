@@ -14,7 +14,7 @@ struct MangaView: View {
     @State var mangaImage: String = ""
     @State var mangaDescription: String = ""
     @State var mangaChapters: [Chapter] = []
-    @State var rotation = 0.0
+    @State var rotated = false
     
     var body: some View {
         ScrollView {
@@ -46,10 +46,10 @@ struct MangaView: View {
                 HStack {
                     Text("ÚLTIMOS CAPÍTULOS LANÇADOS")
                     Image(systemName: "arrow.up.arrow.down")
-                        .rotationEffect(.degrees(rotation))
+                        .rotationEffect(.degrees(rotated ? 180 : 0))
                         .onTapGesture {
                             withAnimation(.linear(duration: 0.15)) {
-                                rotation += 180
+                                rotated.toggle()
                             }
                         }
                 }
