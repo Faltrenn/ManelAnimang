@@ -84,7 +84,7 @@ struct MangaHomeView: View {
                                 EmptyView()
                             }.opacity(0.0)
                             MangaCard(manga: manga)
-                                .swipeActions {
+                                .swipeActions(edge: .leading) {
                                     Button("Remover", systemImage: "trash") {
                                         mangaHomeVM.removeManga(manga: manga)
                                     }

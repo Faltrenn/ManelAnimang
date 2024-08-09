@@ -36,9 +36,13 @@ class MangaHomeViewModel: ObservableObject {
         }
     }
     
+    func hasManga(manga: Manga) -> Bool {
+        mangas.contains { $0.link == manga.link }
+    }
+    
     func removeManga(manga: Manga) {
-        if let index = mangas.firstIndex(where: { $0.link == manga.link }) {
-            mangas.remove(at: index)
+        if hasManga(manga: manga) {
+            mangas.removeAll { $0.link == manga.link }
         }
     }
 }

@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftSoup
 
 struct MangaSearchView: View {
-    @State var mangas: [Manga] = []
+    @State var searchedMangas: [Manga] = []
     @State var search: String = "jujutsu"
     @EnvironmentObject var mangaHomeVM: MangaHomeViewModel
     
@@ -23,14 +23,16 @@ struct MangaSearchView: View {
             }
             .padding()
             List {
-                ForEach(mangas, id: \.link) { manga in
+                ForEach(searchedMangas, id: \.link) { manga in
                     MangaCard(manga: manga)
                         .listRowSeparator(.hidden)
                         .swipeActions(edge: .leading) {
-                            Button("Adicionar", systemImage: "plus.circle.fill") {
-                                mangaHomeVM.addManga(link: manga.link)
+                            if !mangaHomeVM.hasManga(manga: manga) {
+                                Button("Adicionar", systemImage: "plus.circle.fill") {
+                                    mangaHomeVM.addManga(link: manga.link)
+                                }
+                                .tint(.green)
                             }
-                            .tint(.green)
                         }
                 }
             }
@@ -42,7 +44,7 @@ struct MangaSearchView: View {
     }
     
     func searchManga(search: String) {
-        mangas = []
+        searchedMangas = []
         if let url = URL(string: "https://lermangas.me/?s=\(search.searchFormat)&post_type=wp-manga") {
             URLSession.shared.dataTask(with: url) { data, response, error in
                 if error == nil, let data = data, let html = String(data: data, encoding: .utf8) {
@@ -60,7 +62,7 @@ struct MangaSearchView: View {
                             let status = try content[5].text()
                             let launch = try content[7].text()
                             DispatchQueue.main.async {
-                                self.mangas.append(Manga(name: name, altName: altName, imageLink: imageLink, link: mangaLink, genres: genres, status: status, launch: launch, lastChapter: "none", score: "none"))
+                                self.searchedMangas.append(Manga(name: name, altName: altName, imageLink: imageLink, link: mangaLink, genres: genres, status: status, launch: launch, lastChapter: "none", score: "none"))
                             }
                         }
                     } catch {
