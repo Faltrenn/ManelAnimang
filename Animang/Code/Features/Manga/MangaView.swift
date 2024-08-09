@@ -8,6 +8,18 @@
 import SwiftUI
 import SwiftSoup
 
+struct ChapterCard: View {
+    let title: String
+    var body: some View {
+        Text(title)
+            .frame(maxWidth: .infinity)
+            .padding()
+            .background(Color(red: 11/255, green: 11/255, blue: 15/255))
+            .clipShape(RoundedRectangle(cornerRadius: 15.0))
+            .tint(.primary)
+    }
+}
+
 struct MangaView: View {
     let mangaLink: String
     @State var mangaTitle: String = ""
@@ -63,7 +75,7 @@ struct MangaView: View {
                     NavigationLink {
                         ChapterView(chapterLink: chapter.link)
                     } label: {
-                        Text(chapter.title)
+                        ChapterCard(title: chapter.title)
                     }
                 }
             }
