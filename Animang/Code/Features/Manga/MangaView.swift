@@ -62,6 +62,7 @@ struct MangaView: View {
                         .onTapGesture {
                             withAnimation(.linear(duration: 0.15)) {
                                 rotated.toggle()
+                                mangaChapters.reverse()
                             }
                         }
                 }
