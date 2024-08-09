@@ -66,40 +66,41 @@ struct MangaCard: View {
 }
 
 struct MangaHomeView: View {
-    @EnvironmentObject var mangaHomeVM: MangaHomeViewModel
+    @ObservedObject var mangaHomeVM = MangaHomeViewModel()
     
     var body: some View {
-        VStack {
-            NavigationLink {
-                MangaSearchView()
-            } label: {
-                Text("Adicionar")
-            }
-
-            List {
-                ForEach(mangaHomeVM.mangas, id: \.link) { manga in
-                    ZStack {
-                        NavigationLink(destination: MangaView(mangaLink: manga.link)) { EmptyView() }.opacity(0.0)
-                        MangaCard(manga: manga)
-                            .swipeActions {
-                                Button("Remover", systemImage: "trash") {
-                                    mangaHomeVM.removeManga(manga: manga)
-                                }
-                                .tint(.red)
-                            }
-                    }
-                    .listRowSeparator(.hidden)
+        NavigationStack {
+            VStack {
+                NavigationLink {
+                    MangaSearchView()
+                } label: {
+                    Text("Adicionar")
                 }
+                
+                List {
+                    ForEach(mangaHomeVM.mangas, id: \.link) { manga in
+                        ZStack {
+                            NavigationLink(destination: MangaView(mangaLink: manga.link)) {
+                                EmptyView()
+                            }.opacity(0.0)
+                            MangaCard(manga: manga)
+                                .swipeActions {
+                                    Button("Remover", systemImage: "trash") {
+                                        mangaHomeVM.removeManga(manga: manga)
+                                    }
+                                    .tint(.red)
+                                }
+                        }
+                        .listRowSeparator(.hidden)
+                    }
+                }
+                .listStyle(.plain)
             }
-            .listStyle(.plain)
         }
-        .tint(.primary)
+        .environmentObject(mangaHomeVM)
     }
 }
 
 #Preview {
-    NavigationStack {
-        MangaHomeView()
-    }
-    .environmentObject(MangaHomeViewModel())
+    MangaHomeView()
 }

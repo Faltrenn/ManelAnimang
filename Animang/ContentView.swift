@@ -26,15 +26,12 @@ struct ContentView: View {
     var body: some View {
         ZStack(alignment: .bottom){
             ZStack {
-                NavigationStack {
-                    switch page {
-                    case .manga:
-                        MangaHomeView()
-                    case .anime:
-                        Text("Anime")
-                    }
+                switch page {
+                case .manga:
+                    MangaHomeView()
+                case .anime:
+                    Text("Anime")
                 }
-                .environmentObject(MangaHomeViewModel())
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             HStack {
