@@ -43,6 +43,7 @@ struct ContentView: View {
                     }
                 }
             }
+            .frame(height: 100)
         }
         .ignoresSafeArea(edges: [.bottom])
     }
@@ -50,4 +51,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+        .preferredColorScheme(.dark)
 }
