@@ -11,6 +11,16 @@ import SwiftSoup
 class MangaHomeViewModel: ObservableObject {
     @Published var mangas: [Manga] = []
     
+    init() {
+        if let data = UserDefaults.standard.data(forKey: "mangas") {
+            do {
+                mangas = try JSONDecoder().decode([Manga].self, from: data)
+            } catch {
+                print("ERROR: ", error)
+            }
+        }
+    }
+    
     func addManga(link: String) {
         if let url = URL(string: link) {
             URLSession.shared.dataTask(with: url) { data, response, error in
@@ -27,6 +37,7 @@ class MangaHomeViewModel: ObservableObject {
                         let score = try parse.select("div[class=post-total-rating allow_vote] div[class=score font-meta total_votes]").text()
                         DispatchQueue.main.async {
                             self.mangas.append(Manga(name: name, altName: altName, imageLink: imageLink, link: link, genres: genres, status: status, launch: launch, lastChapter: "none", score: score))
+                            self.saveMangas()
                         }
                     } catch {
                         print("ERROR: ", error)
@@ -43,6 +54,13 @@ class MangaHomeViewModel: ObservableObject {
     func removeManga(manga: Manga) {
         if hasManga(manga: manga) {
             mangas.removeAll { $0.link == manga.link }
+            saveMangas()
+        }
+    }
+    
+    func saveMangas() {
+        if let encoded = try? JSONEncoder().encode(mangas) {
+            UserDefaults.standard.set(encoded, forKey: "mangas")
         }
     }
 }

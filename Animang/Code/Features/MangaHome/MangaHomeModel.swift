@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Manga {
+struct Manga: Decodable, Encodable {
     let name: String
     let altName: String
     let imageLink: String
