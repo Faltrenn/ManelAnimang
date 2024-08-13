@@ -31,21 +31,6 @@ import SwiftSoup
 //    }
 //}
 
-struct Episode: Codable {
-    let thumbnail: String
-    let streams: [Stream]
-}
-
-struct Stream: Codable {
-    let playURL: String
-    let formatID: Int
-
-    enum CodingKeys: String, CodingKey {
-        case playURL = "play_url"
-        case formatID = "format_id"
-    }
-}
-
 struct EpisodeView: View {
     let link = "https://aniturept.blogspot.com/2021/12/demon-slayer-1x01-legendado-online.html"
     @State var player: AVPlayer?
