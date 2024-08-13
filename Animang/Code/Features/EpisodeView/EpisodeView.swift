@@ -9,28 +9,6 @@ import SwiftUI
 import AVKit
 import SwiftSoup
 
-
-//func createPlayer(with link: String) -> AVPlayer {
-//    guard let url = URL(string: link) else {
-//        return AVPlayer()
-//    }
-//
-//    var request = URLRequest(url: url)
-//    request.setValue("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36", forHTTPHeaderField: "User-Agent")
-//    
-//    let asset = AVURLAsset(url: url, options: ["AVURLAssetHTTPHeaderFieldsKey": request.allHTTPHeaderFields ?? [:]])
-//    let playerItem = AVPlayerItem(asset: asset)
-//    return AVPlayer(playerItem: playerItem)
-//}
-//
-//struct EpisodeView: View {
-//    let link = "https://rr2---sn-uphcg51pa-bpbz.googlevideo.com/videoplayback?expire=1723520931&ei=I2e6ZsHoHO7jxtYPivG7-Qg&ip=2804:214:85db:d2bd:1977:8f05:1266:cc4f&id=b0e8cc4eadccf7f0&itag=18&source=blogger&xpc=Egho7Zf3LnoBAQ%3D%3D&mh=Rw&mm=31&mn=sn-uphcg51pa-bpbz&ms=au&mv=m&mvi=2&pl=48&susc=bl&eaua=dj08VIqlCF8&mime=video/mp4&vprv=1&rqh=1&dur=1393.615&lmt=1598393324113096&mt=1723491916&txp=1311224&sparams=expire,ei,ip,id,itag,source,xpc,susc,eaua,mime,vprv,rqh,dur,lmt&sig=AJfQdSswRQIgVXk9JA3PYsweOD9LTC0I8m3YhzpoeqUsrIkqzsdaJLsCIQD1kpnvLlSQXtHsMTaiGAUTWQR1W7rZPD-nlCydKD5GAQ%3D%3D&lsparams=mh,mm,mn,ms,mv,mvi,pl&lsig=AGtxev0wRgIhAO8RPUEedB8WaiLyjyMD7XLyHyj4ahqehfafdK2O3mbmAiEAjBXtbL_eHNZIeflZLKl0NYqmdG-cYCEiryGaYJN9m-w%3D"
-//
-//    var body: some View {
-//        VideoPlayer(player: createPlayer(with: link))
-//    }
-//}
-
 struct EpisodeView: View {
     let link = "https://aniturept.blogspot.com/2021/12/demon-slayer-1x01-legendado-online.html"
     @State var player: AVPlayer?
