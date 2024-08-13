@@ -28,9 +28,9 @@ struct EpisodeView: View {
                                 let script = try SwiftSoup.parse(res).select("script").html()
                                 let json = script.split(separator: "= ")[1].description.data(using: .utf8)!
                                 
-                                let vc = try JSONDecoder().decode(Episode.self, from: json)
+                                let ep = try JSONDecoder().decode(Episode.self, from: json)
                                 DispatchQueue.main.async {
-                                    player = createPlayer(with: vc.streams.first!.playURL)
+                                    player = createPlayer(with: ep.streams.first!.playURL)
                                 }
                             } catch {
                                 print(error)

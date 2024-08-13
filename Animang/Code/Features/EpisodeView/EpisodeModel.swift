@@ -14,7 +14,14 @@ struct Episode: Codable {
 
 struct Stream: Codable {
     let playURL: String
-    let formatID: Int
+    let formatID: VideoFormats
+    
+    enum VideoFormats: Int, Codable {
+        case qvga = 7
+        case sd = 18
+        case hd = 22
+        case fhd = 37
+    }
 
     enum CodingKeys: String, CodingKey {
         case playURL = "play_url"
