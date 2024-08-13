@@ -29,7 +29,9 @@ struct EpisodeView: View {
                                 let json = script.split(separator: "= ")[1].description.data(using: .utf8)!
                                 
                                 let vc = try JSONDecoder().decode(Episode.self, from: json)
-                                player = createPlayer(with: vc.streams.first!.playURL)
+                                DispatchQueue.main.async {
+                                    player = createPlayer(with: vc.streams.first!.playURL)
+                                }
                             } catch {
                                 print(error)
                             }
