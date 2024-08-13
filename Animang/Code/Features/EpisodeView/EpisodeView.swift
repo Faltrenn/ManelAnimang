@@ -11,13 +11,11 @@ import SwiftSoup
 
 struct EpisodeView: View {
     let link = "https://aniturept.blogspot.com/2021/12/demon-slayer-1x01-legendado-online.html"
-    @State var player: AVPlayer?
+    @State var player = AVPlayer()
     
     var body: some View {
         VStack {
-            if player != nil {
-                VideoPlayer(player: player)
-            }
+            VideoPlayer(player: player)
         }
             .onAppear {
                 fetch(link: link) { res in
