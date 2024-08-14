@@ -15,6 +15,17 @@ struct Anime {
     let episodesLinks: [String]
 }
 
+struct EpisodeCard: View {
+    let link: String
+    var body: some View {
+        NavigationLink {
+            EpisodeView(link: link)
+        } label: {
+            Text(link)
+        }
+    }
+}
+
 struct AnimeView: View {
     let link = "https://aniturept.blogspot.com/2021/12/demon-slayer-episodios-legendado-online.html"
     @State var anime: Anime?
@@ -33,7 +44,7 @@ struct AnimeView: View {
                     ProgressView()
                 }
                 ForEach(anime.episodesLinks, id: \.self) { link in
-                    Text(link)
+                    EpisodeCard(link: link)
                 }
             }
         }
@@ -86,5 +97,7 @@ struct AnimeView: View {
 }
 
 #Preview {
-    AnimeView()
+    NavigationStack {
+        AnimeView()
+    }
 }
