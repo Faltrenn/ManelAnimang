@@ -69,7 +69,6 @@ struct AnimeView: View {
                     DispatchQueue.main.async {
                         anime = Anime(name: name, animeLink: link, imageLink: imagelink, description: description, episodesLinks: episodesLinks)
                     }
-                    
                 } catch {
                     print(error)
                 }

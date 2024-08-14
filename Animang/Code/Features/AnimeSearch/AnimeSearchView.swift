@@ -8,6 +8,28 @@
 import SwiftUI
 import SwiftSoup
 
+struct AnimeCard: View {
+    let anime: Anime
+    
+    var body: some View {
+        VStack {
+            Text(anime.name)
+                .font(.title2)
+                .bold()
+            VStack {
+                AsyncImage(url: URL(string: anime.imageLink)) { image in
+                    image
+                        .resizable()
+                        .scaledToFit()
+                        
+                } placeholder: {
+                    ProgressView()
+                }
+            }
+        }
+    }
+}
+
 struct AnimeSearchView: View {
     @State var searchedAnimes: [Anime] = []
     @State var search: String = "Rick"
@@ -23,9 +45,8 @@ struct AnimeSearchView: View {
             .padding()
             List {
                 ForEach(searchedAnimes, id: \.animeLink) { anime in
-                    Text(anime.animeLink)
-//                    Anime(manga: manga)
-//                        .listRowSeparator(.hidden)
+                    AnimeCard(anime: anime)
+                        .listRowSeparator(.hidden)
 //                        .swipeActions(edge: .leading) {
 //                            if !mangaHomeVM.hasManga(manga: manga) {
 //                                Button("Adicionar", systemImage: "plus.circle.fill") {
