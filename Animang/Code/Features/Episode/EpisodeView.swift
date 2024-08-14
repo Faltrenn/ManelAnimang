@@ -10,7 +10,7 @@ import AVKit
 import SwiftSoup
 
 struct EpisodeView: View {
-    let link = "https://aniturept.blogspot.com/2021/12/demon-slayer-1x01-legendado-online.html"
+    let link: String
     @State var player = AVPlayer()
     
     var body: some View {
@@ -72,5 +72,5 @@ struct EpisodeView: View {
 }
 
 #Preview {
-    EpisodeView()
+    EpisodeView(link: "https://aniturept.blogspot.com/2021/12/demon-slayer-1x01-legendado-online.html")
 }
