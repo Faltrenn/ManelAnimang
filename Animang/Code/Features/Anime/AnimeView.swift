@@ -10,6 +10,7 @@ import SwiftSoup
 
 struct Anime {
     let name: String
+    let animeLink: String
     let imageLink: String
     let description: String
     let episodesLinks: [String]
@@ -66,7 +67,7 @@ struct AnimeView: View {
                     }
                     
                     DispatchQueue.main.async {
-                        anime = Anime(name: name, imageLink: imagelink, description: description, episodesLinks: episodesLinks)
+                        anime = Anime(name: name, animeLink: link, imageLink: imagelink, description: description, episodesLinks: episodesLinks)
                     }
                     
                 } catch {
