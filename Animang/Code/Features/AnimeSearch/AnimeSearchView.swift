@@ -14,8 +14,8 @@ struct AnimeCard: View {
     var body: some View {
         VStack {
             Text(anime.name)
-                .font(.title2)
                 .bold()
+                .multilineTextAlignment(.center)
             VStack {
                 AsyncImage(url: URL(string: anime.imageLink)) { image in
                     image
@@ -43,10 +43,12 @@ struct AnimeSearchView: View {
                 }
             }
             .padding()
-            List {
+            Grid {
                 ForEach(searchedAnimes, id: \.animeLink) { anime in
-                    AnimeCard(anime: anime)
-                        .listRowSeparator(.hidden)
+                    GridRow {
+                        AnimeCard(anime: anime)
+                            .listRowSeparator(.hidden)
+                    }
 //                        .swipeActions(edge: .leading) {
 //                            if !mangaHomeVM.hasManga(manga: manga) {
 //                                Button("Adicionar", systemImage: "plus.circle.fill") {

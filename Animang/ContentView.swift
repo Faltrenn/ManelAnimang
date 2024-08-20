@@ -30,7 +30,7 @@ struct ContentView: View {
                 case .manga:
                     MangaHomeView()
                 case .anime:
-                    Text("Anime")
+                    AnimeSearchView()
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
