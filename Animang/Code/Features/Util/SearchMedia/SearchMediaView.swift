@@ -14,6 +14,23 @@ struct Media {
     let imageLink: String
 }
 
+struct MediaCard: View {
+    let media: Media
+    
+    var body: some View {
+        VStack {
+            AsyncImage(url: URL(string: media.imageLink)) { image in
+                image
+                    .resizable()
+                    .scaledToFit()
+            } placeholder: {
+                ProgressView()
+            }
+            Text(media.title)
+        }
+    }
+}
+
 struct SearchMediaView: View {
     @State var search = "Rick"
     @State var medias: [Media] = []
@@ -28,7 +45,7 @@ struct SearchMediaView: View {
             }
             ScrollView {
                 ForEach(medias, id: \.link) { media in
-                    Text(media.link)
+                    MediaCard(media: media)
                 }
             }
         }
