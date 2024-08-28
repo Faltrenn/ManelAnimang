@@ -14,6 +14,13 @@ struct Media {
     let imageLink: String
 }
 
+struct MediaSearchSelector {
+    let elements: String
+    let title: String
+    let link: String
+    let imageLink: String
+}
+
 struct MediaCard: View {
     let media: Media
     
@@ -34,6 +41,7 @@ struct MediaCard: View {
 struct SearchMediaView: View {
     @State var search = "Rick"
     @State var medias: [Media] = []
+    let selector = MediaSearchSelector(elements: "div[class=post bar hentry]", title: "h2[class=post-title entry-title]", link: "a", imageLink: "img")
     
     var body: some View {
         VStack {
@@ -58,11 +66,11 @@ struct SearchMediaView: View {
                 if error == nil, let data = data, let html = String(data: data, encoding: .utf8) {
                     do {
                         let parse = try SwiftSoup.parse(html)
-                        let elements = try parse.select("div[class=post bar hentry]")
+                        let elements = try parse.select(selector.elements)
                         for element in elements {
-                            let link = try element.select("a").attr("href")
-                            let imageLink = try element.select("img").attr("src")
-                            let title = try element.select("h2[class=post-title entry-title]").text()
+                            let link = try element.select(selector.link).attr("href")
+                            let imageLink = try element.select(selector.imageLink).attr("src")
+                            let title = try element.select(selector.title).text()
                             DispatchQueue.main.async {
                                 self.medias.append(Media(link: link, title: title, imageLink: imageLink))
                             }
