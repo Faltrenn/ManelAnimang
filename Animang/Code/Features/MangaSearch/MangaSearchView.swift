@@ -45,9 +45,10 @@ struct MangaSearchView: View {
     
     func searchManga(search: String) {
         searchedMangas = []
-        if let url = URL(string: "https://lermangas.me/?s=\(search.searchFormat)&post_type=wp-manga") {
+        if let url = URL(string: "https://leitordemanga.com/?s=\(search.searchFormat)&post_type=wp-manga") {
             URLSession.shared.dataTask(with: url) { data, response, error in
                 if error == nil, let data = data, let html = String(data: data, encoding: .utf8) {
+                    print(html)
                     do {
                         let parse = try SwiftSoup.parse(html)
                         let mangas = try parse.select("div[class=row c-tabs-item__content]")

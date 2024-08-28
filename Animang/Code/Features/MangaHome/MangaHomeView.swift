@@ -72,7 +72,7 @@ struct MangaHomeView: View {
         NavigationStack {
             VStack {
                 NavigationLink {
-                    MangaSearchView()
+                    SearchMediaView<MangaHomeViewModel>(selector: MediaSearchSelector(elements: "div[class=row c-tabs-item__content]", title: "div div div h3 a", link: "div div a", imageLink: "div div a img"))
                 } label: {
                     Text("Adicionar")
                 }

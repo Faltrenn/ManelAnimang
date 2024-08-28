@@ -21,7 +21,8 @@ struct MediaSearchSelector {
     let imageLink: String
 }
 
-struct MediaCard: View {
+struct MediaCard<VM: ViewModel>: View {
+    @EnvironmentObject var vm: VM
     let media: Media
     
     var body: some View {
@@ -35,13 +36,24 @@ struct MediaCard: View {
             }
             Text(media.title)
         }
+        .overlay {
+            Button("Adicionar") {
+                vm.addMedia(media: media)
+            }
+        }
     }
 }
 
-struct SearchMediaView: View {
-    @State var search = "Rick"
+protocol ViewModel: ObservableObject {
+    func addMedia(media: Media)
+    func removeMedia(media: Media)
+}
+
+struct SearchMediaView<VM: ViewModel>: View {
+    @State var search = "a"
     @State var medias: [Media] = []
-    let selector = MediaSearchSelector(elements: "div[class=post bar hentry]", title: "h2[class=post-title entry-title]", link: "a", imageLink: "img")
+    let selector: MediaSearchSelector
+    @EnvironmentObject var vm: VM
     
     var body: some View {
         VStack {
@@ -53,7 +65,7 @@ struct SearchMediaView: View {
             }
             ScrollView {
                 ForEach(medias, id: \.link) { media in
-                    MediaCard(media: media)
+                    MediaCard<VM>(media: media)
                 }
             }
         }
@@ -61,7 +73,7 @@ struct SearchMediaView: View {
     
     func searchMedia(search: String) {
         medias = []
-        if let url = URL(string: "https://www.aniture-pt.com.br/search?q=\(search.searchFormat)") {
+        if let url = URL(string: "https://leitordemanga.com/?s=\(search.searchFormat)&post_type=wp-manga") {
             URLSession.shared.dataTask(with: url) { data, response, error in
                 if error == nil, let data = data, let html = String(data: data, encoding: .utf8) {
                     do {
@@ -85,6 +97,7 @@ struct SearchMediaView: View {
 }
 
 #Preview {
-    SearchMediaView()
+    SearchMediaView<MangaHomeViewModel>(selector: MediaSearchSelector(elements: "div[class=post bar hentry]", title: "h2[class=post-title entry-title]", link: "a", imageLink: "img"))
+        .environmentObject(MangaHomeViewModel())
         .padding()
 }

@@ -8,7 +8,7 @@
 import Foundation
 import SwiftSoup
 
-class MangaHomeViewModel: ObservableObject {
+class MangaHomeViewModel: ViewModel {
     @Published var mangas: [Manga] = []
     
     init() {
@@ -21,6 +21,16 @@ class MangaHomeViewModel: ObservableObject {
         }
     }
     
+    func addMedia(media: Media) {
+        addManga(link: media.link)
+    }
+    
+    func removeMedia(media: Media) {
+        if let manga = mangas.first(where: { $0.link == media.link } ) {
+            removeManga(manga: manga)
+        }
+    }
+    
     func addManga(link: String) {
         if let url = URL(string: link) {
             URLSession.shared.dataTask(with: url) { data, response, error in
@@ -29,7 +39,7 @@ class MangaHomeViewModel: ObservableObject {
                         let parse = try SwiftSoup.parse(html)
                         let name = try parse.select("div[class=post-title]").first()?.text() ?? ""
                         let altName = try parse.select("div[class=post-title]").first()?.text() ?? ""
-                        let imageLink = try parse.select("div[class=summary_image] a img").first()?.attr("src") ?? ""
+                        let imageLink = try parse.select("div[class=summary_image] a img").attr("data-src")
                         let genres = try parse.select("div[class=genres-content]").first()?.text() ?? ""
                         let postStatus = try parse.select("div[class=post-status] div div[class=summary-content]")
                         let launch = try postStatus[0].text()
