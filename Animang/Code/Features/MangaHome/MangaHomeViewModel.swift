@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 import SwiftSoup
 
 class MangaHomeViewModel: ViewModel {
@@ -63,7 +64,9 @@ class MangaHomeViewModel: ViewModel {
     
     func removeManga(manga: Manga) {
         if hasManga(manga: manga) {
-            mangas.removeAll { $0.link == manga.link }
+            withAnimation {
+                mangas.removeAll { $0.link == manga.link }
+            }
             saveMangas()
         }
     }
