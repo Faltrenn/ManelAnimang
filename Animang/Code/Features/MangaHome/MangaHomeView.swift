@@ -1,0 +1,106 @@
+//
+//  MangaHomeView.swift
+//  Animang
+//
+//  Created by Emanuel on 03/08/24.
+//
+
+import SwiftUI
+import SwiftSoup
+
+struct NamerTag: View {
+    let title: String
+    let value: String
+    
+    init(_ title: String, _ value: String) {
+        self.title = title
+        self.value = value
+    }
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text(title)
+                .bold()
+            Text(value)
+        }
+        .multilineTextAlignment(.leading)
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+}
+
+struct MangaCard: View {
+    let manga: Manga
+    
+    var body: some View {
+        VStack {
+            Text(manga.name)
+                .font(.title2)
+                .bold()
+            HStack(alignment: .top) {
+                VStack {
+                    AsyncImage(url: URL(string: manga.imageLink)) { image in
+                        image
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 150, height: 216)
+                    } placeholder: {
+                        ProgressView()
+                    }
+                }
+                VStack(alignment: .leading) {
+                    NamerTag("Nome alternativo", manga.altName)
+                    NamerTag("Gêneros", manga.genres)
+                    NamerTag("Último capítulo", manga.lastChapter)
+                    NamerTag("Status", manga.status)
+                    NamerTag("Lançamento", manga.launch)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .padding(10)
+                .font(.subheadline)
+                .background(Color(red: 21/255, green: 22/255, blue: 29/255))
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .multilineTextAlignment(.leading)
+            }
+        }
+    }
+}
+
+struct MangaHomeView: View {
+    @ObservedObject var mangaHomeVM = MangaHomeViewModel()
+    
+    var body: some View {
+        NavigationStack {
+            VStack {
+                NavigationLink {
+                    SearchMediaView<MangaHomeViewModel>(selector: MediaSearchSelector(elements: "div[class=row c-tabs-item__content]", title: "div div div h3 a", link: "div div a", imageLink: "div div a img"))
+                } label: {
+                    Text("Adicionar")
+                }
+                
+                List {
+                    ForEach(mangaHomeVM.mangas, id: \.link) { manga in
+                        ZStack {
+                            NavigationLink(destination: MangaView(mangaLink: manga.link)) {
+                                EmptyView()
+                            }.opacity(0.0)
+                            MangaCard(manga: manga)
+                                .swipeActions(edge: .leading) {
+                                    Button("Remover", systemImage: "trash") {
+                                        mangaHomeVM.removeManga(manga: manga)
+                                    }
+                                    .tint(.red)
+                                }
+                        }
+                        .listRowSeparator(.hidden)
+                    }
+                }
+                .listStyle(.plain)
+            }
+        }
+        .environmentObject(mangaHomeVM)
+    }
+}
+
+#Preview {
+    MangaHomeView()
+}
