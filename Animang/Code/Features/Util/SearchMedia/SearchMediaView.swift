@@ -15,6 +15,15 @@ struct Media {
 }
 
 struct MediaSearchSelector {
+    static let leitorDeManga = MediaSearchSelector(
+        site: "https://leitordemanga.com/?s=%@&post_type=wp-manga",
+        elements: "div[class=row c-tabs-item__content]",
+        title: "div div div h3 a",
+        link: "div div a",
+        imageLink: "div div a img"
+    )
+    
+    let site: String
     let elements: String
     let title: String
     let link: String
@@ -73,7 +82,7 @@ struct SearchMediaView<VM: ViewModel>: View {
     
     func searchMedia(search: String) {
         medias = []
-        if let url = URL(string: "https://leitordemanga.com/?s=\(search.searchFormat)&post_type=wp-manga") {
+        if let url = URL(string: String(format: selector.site, search.searchFormat)) {
             URLSession.shared.dataTask(with: url) { data, response, error in
                 if error == nil, let data = data, let html = String(data: data, encoding: .utf8) {
                     do {
@@ -97,7 +106,7 @@ struct SearchMediaView<VM: ViewModel>: View {
 }
 
 #Preview {
-    SearchMediaView<MangaHomeViewModel>(selector: MediaSearchSelector(elements: "div[class=post bar hentry]", title: "h2[class=post-title entry-title]", link: "a", imageLink: "img"))
+    SearchMediaView<MangaHomeViewModel>(selector: .leitorDeManga)
         .environmentObject(MangaHomeViewModel())
         .padding()
 }

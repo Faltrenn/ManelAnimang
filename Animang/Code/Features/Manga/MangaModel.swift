@@ -11,3 +11,7 @@ struct Chapter {
     let title: String
     let link: String
 }
+
+struct MangaSelector {
+    
+}
