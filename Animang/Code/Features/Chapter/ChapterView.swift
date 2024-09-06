@@ -10,23 +10,33 @@ import SwiftSoup
 
 struct ChapterView: View {
     let chapterLink: String
+    let mangaSelector: MangaSelector
     @State var images: [String] = []
     @State var imageIndex: Int = 0
     
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-                if images.count > 0 {
-                    ForEach(images, id: \.self) { link in
-                        AsyncImage(url: URL(string: link)) { image in
+                ForEach(0..<imageIndex, id: \.self) { index in
+                    AsyncImage(url: URL(string: images[index])) { phase in
+                        if let image = phase.image {
                             image
                                 .resizable()
-                                .aspectRatio(contentMode: .fill)
-                        } placeholder: {
+                                .aspectRatio(contentMode: .fit)
+                                .frame(maxWidth: .infinity)
+                                .onAppear {
+                                    if imageIndex < images.count {
+                                        imageIndex += 1
+                                    }
+                                }
+                        } else if phase.error != nil {
+                            Color.red
+                        } else {
                             ProgressView()
                         }
                     }
-                } else {
+                }
+                ForEach(imageIndex..<images.count, id: \.self) { _ in
                     ProgressView()
                 }
             }
@@ -37,10 +47,11 @@ struct ChapterView: View {
                     if let data = data, let html = String(data: data, encoding: .utf8), error == nil {
                         do {
                             let parse = try SwiftSoup.parse(html)
-                            let elements = try parse.select("div[class=page-break no-gaps] img")
+                            let elements = try parse.select(mangaSelector.chapterImages)
                             let fetchedImages = try elements.map { try $0.attr("src").trimmingCharacters(in: .whitespacesAndNewlines) }
                             DispatchQueue.main.async {
                                 images = fetchedImages
+                                imageIndex += 1
                             }
                         } catch {
                             print("ERROR: ", error)
@@ -55,5 +66,5 @@ struct ChapterView: View {
 }
 
 #Preview {
-    ChapterView(chapterLink: "https://lermangas.me/manga/solo-leveling/capitulo-139/")
+    ChapterView(chapterLink: "https://lermangas.me/manga/solo-leveling/capitulo-139/", mangaSelector: .leitorDeManga)
 }

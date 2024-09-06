@@ -13,5 +13,15 @@ struct Chapter {
 }
 
 struct MangaSelector {
+    static let leitorDeManga = MangaSelector(
+        mediaSelector: .leitorDeManga,
+        description: "div[class=manga-excerpt]",
+        chapters: "li[class=wp-manga-chapter] a",
+        chapterImages: "div[class=page-break no-gaps] img"
+    )
     
+    let mediaSelector: MediaSearchSelector
+    let description: String
+    let chapters: String
+    let chapterImages: String
 }

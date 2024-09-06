@@ -80,7 +80,7 @@ struct MangaHomeView: View {
                 List {
                     ForEach(mangaHomeVM.mangas, id: \.link) { manga in
                         ZStack {
-                            NavigationLink(destination: MangaView(mangaLink: manga.link)) {
+                            NavigationLink(destination: MangaView(mangaLink: manga.link, mangaSelector: .leitorDeManga)) {
                                 EmptyView()
                             }.opacity(0.0)
                             MangaCard(manga: manga)

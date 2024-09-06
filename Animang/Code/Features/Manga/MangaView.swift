@@ -22,6 +22,7 @@ struct ChapterCard: View {
 
 struct MangaView: View {
     let mangaLink: String
+    let mangaSelector: MangaSelector
     @State var mangaTitle: String = ""
     @State var mangaImage: String = ""
     @State var mangaDescription: String = ""
@@ -74,7 +75,7 @@ struct MangaView: View {
 
                 ForEach(mangaChapters, id: \.link) { chapter in
                     NavigationLink {
-                        ChapterView(chapterLink: chapter.link)
+                        ChapterView(chapterLink: chapter.link, mangaSelector: .leitorDeManga)
                     } label: {
                         ChapterCard(title: chapter.title)
                     }
@@ -88,10 +89,10 @@ struct MangaView: View {
                     if error == nil, let data = data, let html = String(data: data, encoding: .utf8) {
                         do {
                             let parse = try SwiftSoup.parse(html)
-                            let title = try parse.select("div[class=post-title]").first()?.text() ?? ""
+                            let title = try parse.select(mangaSelector.mediaSelector.title).first()?.text() ?? ""
                             let image = try parse.select("div[class=summary_image] a img").first()?.attr("src") ?? ""
-                            let description = try parse.select("div[class=manga-excerpt]").first()?.text() ?? ""
-                            let elements = try parse.select("li[class=wp-manga-chapter] a")
+                            let description = try parse.select(mangaSelector.description).first()?.text() ?? ""
+                            let elements = try parse.select(mangaSelector.chapters)
                             var chapters: [Chapter] = []
                             for element in elements {
                                 try chapters.append(Chapter(title: element.text(), link: element.attr("href")))
@@ -115,6 +116,6 @@ struct MangaView: View {
 
 #Preview {
     NavigationStack {
-        MangaView(mangaLink: "https://lermangas.me/manga/o-cacador-de-destinos-rank-f/")        
+        MangaView(mangaLink: "https://lermangas.me/manga/o-cacador-de-destinos-rank-f/", mangaSelector: .leitorDeManga)        
     }
 }
