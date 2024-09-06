@@ -24,24 +24,11 @@ struct ChapterView: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(maxWidth: .infinity)
-                                .onAppear {
-                                    if imageIndex < images.count {
-                                        imageIndex += 1
-                                    }
-                                }
                         } else if phase.error != nil {
                             Color.red
-                                .onAppear {
-                                    print(phase.error)
-                                }
                         } else {
                             ProgressView()
                         }
-                    }
-                }
-                if images.count > 0 {
-                    ForEach(imageIndex..<images.count, id: \.self) { _ in
-                        ProgressView()
                     }
                 }
             }
@@ -55,14 +42,23 @@ struct ChapterView: View {
   
                     DispatchQueue.main.async {
                         images = fetchedImages
-                        imageIndex += 1
+                        loadNextImage()
                     }
                 } catch {
                     print("ERROR: ", error)
                 }
             } 
         }
-    }  
+    }
+    
+    func loadNextImage() {
+        if imageIndex < images.count {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                imageIndex += 1
+                loadNextImage()
+            }
+        }
+    }
     
     func fetch(link: String, completion: @escaping (String) -> Void) {
         if let request = createRequest(link: link) {
