@@ -8,12 +8,6 @@
 import SwiftUI
 import SwiftSoup
 
-struct Media {
-    let link: String
-    let title: String
-    let imageLink: String
-}
-
 struct MediaSearchSelector {
     static let leitorDeManga = MediaSearchSelector(
         site: "https://leitordemanga.com/?s=%@&post_type=wp-manga",
@@ -53,11 +47,6 @@ struct MediaCard<VM: ViewModel>: View {
     }
 }
 
-protocol ViewModel: ObservableObject {
-    func addMedia(media: Media)
-    func removeMedia(media: Media)
-}
-
 struct SearchMediaView<VM: ViewModel>: View {
     @State var search = "a"
     @State var medias: [Media] = []
@@ -93,7 +82,7 @@ struct SearchMediaView<VM: ViewModel>: View {
                             let imageLink = try element.select(selector.imageLink).attr("src")
                             let title = try element.select(selector.title).text()
                             DispatchQueue.main.async {
-                                self.medias.append(Media(link: link, title: title, imageLink: imageLink))
+                                self.medias.append(Media(title: title, link: link, imageLink: imageLink))
                             }
                         }
                     } catch {

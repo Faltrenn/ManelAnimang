@@ -75,12 +75,6 @@ struct MangaSearchView: View {
     }
 }
 
-extension String {
-    var searchFormat: String {
-        self.replacingOccurrences(of: " ", with: "+")
-    }
-}
-
 #Preview {
     MangaSearchView()
         .environmentObject(MangaHomeViewModel())
