@@ -8,20 +8,20 @@
 import SwiftUI
 import SwiftSoup
 
-struct MediaSearchSelector {
-    static let leitorDeManga = MediaSearchSelector(
+struct MediaSelector {
+    static let leitorDeManga = MediaSelector(
         site: "https://leitordemanga.com/?s=%@&post_type=wp-manga",
         elements: "div[class=row c-tabs-item__content]",
-        title: "div div div h3 a",
+        title: ("div div div h3 a", "div[class=col-12 col-sm-12 col-md-12] div[class=post-title] h1"),
         link: "div div a",
-        imageLink: "div div a img"
+        imageLink: ("div div a img", "div[class=summary_image] a img")
     )
     
     let site: String
     let elements: String
-    let title: String
+    let title: (String, String)
     let link: String
-    let imageLink: String
+    let imageLink: (String, String)
 }
 
 struct MediaCard<VM: ViewModel>: View {
@@ -50,7 +50,7 @@ struct MediaCard<VM: ViewModel>: View {
 struct SearchMediaView<VM: ViewModel>: View {
     @State var search = "a"
     @State var medias: [Media] = []
-    let selector: MediaSearchSelector
+    let selector: MediaSelector
     @EnvironmentObject var vm: VM
     
     var body: some View {
@@ -79,8 +79,8 @@ struct SearchMediaView<VM: ViewModel>: View {
                         let elements = try parse.select(selector.elements)
                         for element in elements {
                             let link = try element.select(selector.link).attr("href")
-                            let imageLink = try element.select(selector.imageLink).attr("src")
-                            let title = try element.select(selector.title).text()
+                            let imageLink = try element.select(selector.imageLink.0).attr("src")
+                            let title = try element.select(selector.title.0).text()
                             DispatchQueue.main.async {
                                 self.medias.append(Media(title: title, link: link, imageLink: imageLink))
                             }

@@ -29,7 +29,7 @@ struct NamerTag: View {
 }
 
 struct MangaCard: View {
-    let manga: Manga
+    @ObservedObject var manga: Manga
     
     var body: some View {
         VStack {
@@ -38,7 +38,7 @@ struct MangaCard: View {
                 .bold()
             HStack(alignment: .top) {
                 VStack {
-                    AsyncImage(url: URL(string: manga.imageLink)) { image in
+                    AsyncImage(url: URL(string: manga.imageLink)) { image in 
                         image
                             .resizable()
                             .scaledToFit()
@@ -67,13 +67,13 @@ struct MangaCard: View {
 
 struct MangaHomeView: View {
     @ObservedObject var mangaHomeVM = MangaHomeViewModel()
-    
+     
     var body: some View {
         NavigationStack {
             VStack {
                 NavigationLink {
                     SearchMediaView<MangaHomeViewModel>(selector: .leitorDeManga)
-                } label: {
+                } label: { 
                     Text("Adicionar")
                 }
                 

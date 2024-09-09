@@ -24,6 +24,7 @@ struct MangaView: View {
     @ObservedObject var manga: Manga
     let mangaSelector: MangaSelector
     @State var rotated = false
+    @EnvironmentObject var mangaHVM: MangaHomeViewModel
     
     var body: some View {
         ScrollView {
@@ -63,11 +64,11 @@ struct MangaView: View {
                             }
                         }
                 }
-                    .bold()
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(Color(red: 21/255, green: 22/255, blue: 29/255))
-                    .clipShape(RoundedRectangle(cornerRadius: 25.0))
+                .bold()
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background(Color(red: 21/255, green: 22/255, blue: 29/255))
+                .clipShape(RoundedRectangle(cornerRadius: 25.0))
 
                 ForEach(manga.chapters, id: \.link) { chapter in
                     NavigationLink {
@@ -80,32 +81,7 @@ struct MangaView: View {
             .padding()
         }
         .onAppear {
-            if let url = URL(string: manga.link) {
-                URLSession.shared.dataTask(with: url) { data, response, error in
-                    if error == nil, let data = data, let html = String(data: data, encoding: .utf8) {
-                        do {
-                            let parse = try SwiftSoup.parse(html)
-                            let title = try parse.select(mangaSelector.mediaSelector.title).first()?.text() ?? ""
-                            let image = try parse.select("div[class=summary_image] a img").first()?.attr("src") ?? ""
-                            let description = try parse.select(mangaSelector.description).first()?.text() ?? ""
-                            let elements = try parse.select(mangaSelector.chapters)
-                            var chapters: [Chapter] = []
-                            for element in elements {
-                                try chapters.append(Chapter(title: element.text(), link: element.attr("href")))
-                            }
-                            DispatchQueue.main.async {
-                                self.manga.title = title
-                                self.manga.imageLink = image
-                                self.manga.description = description
-                                self.manga.chapters = chapters
-                            }
-                        } catch {
-                            print("ERROR: ", error)
-                        }
-                    }
-                }
-                .resume()
-            }
+            manga.refresh(selector: .leitorDeManga, vm: mangaHVM)
         }
     }
 }
@@ -113,5 +89,6 @@ struct MangaView: View {
 #Preview {
     NavigationStack {
         MangaView(manga: Manga(media: Media(title: "", link: "https://lermangas.me/manga/o-cacador-de-destinos-rank-f/", imageLink: ""), description: "", chapters: []), mangaSelector: .leitorDeManga)
+            .environmentObject(MangaHomeViewModel())
     }
 }
