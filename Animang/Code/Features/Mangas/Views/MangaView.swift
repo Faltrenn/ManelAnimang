@@ -21,22 +21,18 @@ struct ChapterCard: View {
 }
 
 struct MangaView: View {
-    let mangaLink: String
+    @ObservedObject var manga: Manga
     let mangaSelector: MangaSelector
-    @State var mangaTitle: String = ""
-    @State var mangaImage: String = ""
-    @State var mangaDescription: String = ""
-    @State var mangaChapters: [Chapter] = []
     @State var rotated = false
     
     var body: some View {
         ScrollView {
             VStack {
-                Text(mangaTitle)
+                Text(manga.title)
                     .font(.title)
                     .bold()
                     .multilineTextAlignment(.center)
-                AsyncImage(url: URL(string: mangaImage)) { image in
+                AsyncImage(url: URL(string: manga.imageLink)) { image in
                     image
                         .resizable()
                         .aspectRatio(contentMode: .fill)
@@ -50,7 +46,7 @@ struct MangaView: View {
                         }
                 }
                 VStack {
-                    Text(mangaDescription)
+                    Text(manga.description)
                 }
                 .padding()
                 .background(Color(red: 31/255, green: 31/255, blue: 36/255))
@@ -63,7 +59,7 @@ struct MangaView: View {
                         .onTapGesture {
                             withAnimation(.linear(duration: 0.15)) {
                                 rotated.toggle()
-                                mangaChapters.reverse()
+                                manga.chapters.reverse()
                             }
                         }
                 }
@@ -73,7 +69,7 @@ struct MangaView: View {
                     .background(Color(red: 21/255, green: 22/255, blue: 29/255))
                     .clipShape(RoundedRectangle(cornerRadius: 25.0))
 
-                ForEach(mangaChapters, id: \.link) { chapter in
+                ForEach(manga.chapters, id: \.link) { chapter in
                     NavigationLink {
                         ChapterView(chapterLink: chapter.link, mangaSelector: .leitorDeManga)
                     } label: {
@@ -84,7 +80,7 @@ struct MangaView: View {
             .padding()
         }
         .onAppear {
-            if let url = URL(string: mangaLink) {
+            if let url = URL(string: manga.link) {
                 URLSession.shared.dataTask(with: url) { data, response, error in
                     if error == nil, let data = data, let html = String(data: data, encoding: .utf8) {
                         do {
@@ -98,10 +94,10 @@ struct MangaView: View {
                                 try chapters.append(Chapter(title: element.text(), link: element.attr("href")))
                             }
                             DispatchQueue.main.async {
-                                mangaTitle = title
-                                mangaImage = image
-                                mangaDescription = description
-                                mangaChapters = chapters
+                                self.manga.title = title
+                                self.manga.imageLink = image
+                                self.manga.description = description
+                                self.manga.chapters = chapters
                             }
                         } catch {
                             print("ERROR: ", error)
@@ -116,6 +112,6 @@ struct MangaView: View {
 
 #Preview {
     NavigationStack {
-        MangaView(mangaLink: "https://lermangas.me/manga/o-cacador-de-destinos-rank-f/", mangaSelector: .leitorDeManga)        
+        MangaView(manga: Manga(media: Media(title: "", link: "https://lermangas.me/manga/o-cacador-de-destinos-rank-f/", imageLink: ""), description: "", chapters: []), mangaSelector: .leitorDeManga)
     }
 }

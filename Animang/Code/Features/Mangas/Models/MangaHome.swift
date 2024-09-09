@@ -7,14 +7,3 @@
 
 import Foundation
 
-struct Manga: Decodable, Encodable {
-    let name: String
-    let altName: String
-    let imageLink: String
-    let link: String
-    var genres: String
-    let status: String
-    let launch: String
-    let lastChapter: String
-    let score: String
-}

@@ -33,7 +33,7 @@ struct MangaCard: View {
     
     var body: some View {
         VStack {
-            Text(manga.name)
+            Text(manga.title)
                 .font(.title2)
                 .bold()
             HStack(alignment: .top) {
@@ -48,11 +48,11 @@ struct MangaCard: View {
                     }
                 }
                 VStack(alignment: .leading) {
-                    NamerTag("Nome alternativo", manga.altName)
-                    NamerTag("Gêneros", manga.genres)
-                    NamerTag("Último capítulo", manga.lastChapter)
-                    NamerTag("Status", manga.status)
-                    NamerTag("Lançamento", manga.launch)
+//                    NamerTag("Nome alternativo", manga.altName)
+//                    NamerTag("Gêneros", manga.genres)
+//                    NamerTag("Último capítulo", manga.lastChapter)
+//                    NamerTag("Status", manga.status)
+//                    NamerTag("Lançamento", manga.launch)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .padding(10)
@@ -80,7 +80,7 @@ struct MangaHomeView: View {
                 List {
                     ForEach(mangaHomeVM.mangas, id: \.link) { manga in
                         ZStack {
-                            NavigationLink(destination: MangaView(mangaLink: manga.link, mangaSelector: .leitorDeManga)) {
+                            NavigationLink(destination: MangaView(manga: manga, mangaSelector: .leitorDeManga)) {
                                 EmptyView()
                             }.opacity(0.0)
                             MangaCard(manga: manga)
