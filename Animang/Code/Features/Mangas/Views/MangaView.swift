@@ -72,7 +72,7 @@ struct MangaView: View {
 
                 ForEach(manga.chapters, id: \.link) { chapter in
                     NavigationLink {
-                        ChapterView(chapterLink: chapter.link, mangaSelector: .leitorDeManga)
+                        ChapterView(chapter: chapter, mangaSelector: .leitorDeManga)
                     } label: {
                         ChapterCard(title: chapter.title)
                     }

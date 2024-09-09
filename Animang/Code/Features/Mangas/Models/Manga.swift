@@ -71,9 +71,51 @@ class Manga: ObservableObject, Decodable, Encodable {
     }
 }
 
-struct Chapter: Encodable, Decodable {
+class Chapter: ObservableObject, Encodable, Decodable {
     let title: String
     let link: String
+    
+    @Published var imagesURL: [String] = []
+    
+    init(title: String, link: String) {
+        self.title = title
+        self.link = link
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(title, forKey: .title)
+        try container.encode(link, forKey: .link)
+        try container.encode(imagesURL, forKey: .imagesURL)
+    }
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.title = try container.decode(String.self, forKey: .title)
+        self.link = try container.decode(String.self, forKey: .link)
+        self.imagesURL = try container.decode([String].self, forKey: .imagesURL)
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case title, link, imagesURL
+    }
+    
+    func refresh(selector: MangaSelector, vm: MangaHomeViewModel) {
+        fetch(link: "\(link)?style=list") { html in
+            do {
+                let parse = try SwiftSoup.parse(html)
+                let elements = try parse.select("div[class=page-break] img")
+                let fetchedImages = try elements.map({ try $0.attr("data-src").replacing("\n", with: "").replacing("http", with: "https") })
+
+                DispatchQueue.main.async {
+                    self.imagesURL = fetchedImages
+                    vm.saveMangas()
+                }
+            } catch {
+                print("ERROR: ", error)
+            }
+        }
+    }
 }
 
 
@@ -82,7 +124,7 @@ struct MangaSelector {
         mediaSelector: .leitorDeManga,
         description: "div[class=description-summary]",
         chapters: "li[class=wp-manga-chapter] a",
-        chapterImages: "div[class=page-break no-gaps] img"
+        chapterImages: "div[class=page-break] img"
     )
     
     let mediaSelector: MediaSelector
