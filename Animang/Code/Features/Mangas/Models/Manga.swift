@@ -101,18 +101,20 @@ class Chapter: ObservableObject, Encodable, Decodable {
     }
     
     func refresh(selector: MangaSelector, vm: MangaHomeViewModel) {
-        fetch(link: "\(link)?style=list") { html in
-            do {
-                let parse = try SwiftSoup.parse(html)
-                let elements = try parse.select("div[class=page-break] img")
-                let fetchedImages = try elements.map({ try $0.attr("data-src").replacing("\n", with: "").replacing("http", with: "https") })
-
-                DispatchQueue.main.async {
-                    self.imagesURL = fetchedImages
-                    vm.saveMangas()
+        if imagesURL.isEmpty {
+            fetch(link: "\(link)?style=list") { html in
+                do {
+                    let parse = try SwiftSoup.parse(html)
+                    let elements = try parse.select("div[class=page-break] img")
+                    let fetchedImages = try elements.map({ try $0.attr("data-src").replacing("\n", with: "").replacing("http", with: "https") })
+                    
+                    DispatchQueue.main.async {
+                        self.imagesURL = fetchedImages
+                        vm.saveMangas()
+                    }
+                } catch {
+                    print("ERROR: ", error)
                 }
-            } catch {
-                print("ERROR: ", error)
             }
         }
     }

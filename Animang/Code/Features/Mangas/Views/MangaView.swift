@@ -88,7 +88,7 @@ struct MangaView: View {
 
 #Preview {
     NavigationStack {
-        MangaView(manga: Manga(media: Media(title: "", link: "https://lermangas.me/manga/o-cacador-de-destinos-rank-f/", imageLink: ""), description: "", chapters: []), mangaSelector: .leitorDeManga)
-            .environmentObject(MangaHomeViewModel())
+        MangaView(manga: Manga(media: Media(title: "", link: "https://leitordemanga.com/ler-manga/enen-no-shouboutai/", imageLink: ""), description: "", chapters: []), mangaSelector: .leitorDeManga)
     }
+    .environmentObject(MangaHomeViewModel())
 }
