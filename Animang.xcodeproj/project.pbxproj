@@ -112,9 +112,9 @@
 		CCC1EAF62C8F7A3B0024101C /* Mangas */ = {
 			isa = PBXGroup;
 			children = (
-				CCC1EAF92C8F7B930024101C /* ViewModels */,
 				CCC1EAF82C8F7B750024101C /* Models */,
 				CCC1EAF72C8F7B570024101C /* Views */,
+				CCC1EAF92C8F7B930024101C /* ViewModels */,
 			);
 			path = Mangas;
 			sourceTree = "<group>";
