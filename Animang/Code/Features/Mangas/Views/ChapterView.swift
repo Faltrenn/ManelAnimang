@@ -13,6 +13,8 @@ struct ChapterView: View {
     let mangaSelector: MangaSelector
     @EnvironmentObject var mangaHVM: MangaHomeViewModel
     
+    let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
@@ -33,7 +35,7 @@ struct ChapterView: View {
                     }
                 } else {
                     ForEach(chapter.downloadedImages, id: \.self) { link in
-                        if let img = UIImage(contentsOfFile: link.removingPercentEncoding!) {
+                        if let img = UIImage(contentsOfFile: documentsDirectory.appending(path:  link).path()) {
                             Image(uiImage: img)
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)

@@ -14,6 +14,7 @@ class DownloadManager: ObservableObject {
     @ObservedObject var manga: Manga
     @ObservedObject var chapter: Chapter
     let directory: URL
+    let localDirectory: URL
     
     var downloadedImages: [URL] = []
     
@@ -21,23 +22,21 @@ class DownloadManager: ObservableObject {
         self.manga = manga
         self.chapter = chapter
         self.directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-            .appending(path: "Mangas")
-            .appending(path: manga.title)
-            .appending(path: chapter.title)
+        self.localDirectory = URL(filePath: "Mangas").appending(path: manga.title).appending(path: chapter.title)
     }
     
     func download(mangaHVM: MangaHomeViewModel) {
         try? FileManager.default.removeItem(at: self.directory)
-        try? FileManager.default.createDirectory(at: self.directory, withIntermediateDirectories: true)
+        try? FileManager.default.createDirectory(at: self.directory.appending(path: localDirectory.path()), withIntermediateDirectories: true)
         
         downloading = true
         for (index, link) in chapter.imagesURL.enumerated() {
             if let url = URL(string: link) {
                 URLSession.shared.downloadTask(with: url) { local, response, error in
                     if let local = local {
-                        let fileDir = self.directory.appending(path: "\(index).\(link.split(separator: ".").last ?? "")")
+                        let fileDir = self.localDirectory.appending(path: "\(index).\(link.split(separator: ".").last ?? "")")
                         do {
-                            try FileManager.default.moveItem(at: local, to: fileDir)
+                            try FileManager.default.moveItem(at: local, to: self.directory.appending(path: fileDir.path()))
                             self.downloadedImages.append(fileDir)
                             DispatchQueue.main.async {
                                 self.progress = Double(self.downloadedImages.count) / Double(self.chapter.imagesURL.count)
@@ -46,6 +45,7 @@ class DownloadManager: ObservableObject {
                                     self.chapter.downloadedImages = self.downloadedImages
                                         .sorted(by: { Int($0.lastPathComponent.split(separator: ".")[0])! < Int($1.lastPathComponent.split(separator: ".")[0])! })
                                         .map({ $0.path })
+                                    print(self.chapter.downloadedImages)
                                     mangaHVM.saveMangas()
                                 }
                             }
@@ -56,6 +56,11 @@ class DownloadManager: ObservableObject {
                 }.resume()
             }
         }
+    }
+    
+    func delete() {
+        try? FileManager.default.removeItem(at: self.directory)
+        chapter.downloadedImages = []
     }
 }
 
@@ -81,10 +86,16 @@ struct ChapterCard: View {
             .overlay(alignment: .trailing) {
                 if downloader.downloading {
                     Text("\(downloader.progress)")
-                } else {
+                } else if (chapter.downloadedImages.isEmpty) {
                     Image(systemName: "arrow.down")
                         .onTapGesture {
                             downloader.download(mangaHVM: mangaHVM)
+                        }
+                } else {
+                    Image(systemName: "trash")
+                        .foregroundStyle(.red)
+                        .onTapGesture {
+                            downloader.delete()
                         }
                 }
             }
