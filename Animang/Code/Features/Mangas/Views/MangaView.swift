@@ -45,7 +45,10 @@ class DownloadManager: ObservableObject {
                                 self.progress = Double(self.downloadedImages.count) / Double(self.chapter.imagesURL.count)
                                 if self.progress == 1 {
                                     self.downloading = false
-                                    self.chapter.downloadedImages = self.downloadedImages.map({ $0.path() })
+                                    self.chapter.downloadedImages = self.downloadedImages
+                                        .sorted(by: { Int($0.lastPathComponent.split(separator: ".")[0])! < Int($1.lastPathComponent.split(separator: ".")[0])! })
+                                        .map({ $0.path })
+                                    print(self.chapter.downloadedImages)
                                     mangaHVM.saveMangas()
                                 }
                             }
