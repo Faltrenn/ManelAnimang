@@ -27,10 +27,8 @@ class DownloadManager: ObservableObject {
     }
     
     func download(mangaHVM: MangaHomeViewModel) {
-        var isDirectory: ObjCBool = false
-        if !FileManager.default.fileExists(atPath: self.directory.path, isDirectory: &isDirectory) {
-            try? FileManager.default.createDirectory(at: self.directory, withIntermediateDirectories: true)
-        }
+        try? FileManager.default.removeItem(at: self.directory)
+        try? FileManager.default.createDirectory(at: self.directory, withIntermediateDirectories: true)
         
         downloading = true
         for (index, link) in chapter.imagesURL.enumerated() {
@@ -48,7 +46,6 @@ class DownloadManager: ObservableObject {
                                     self.chapter.downloadedImages = self.downloadedImages
                                         .sorted(by: { Int($0.lastPathComponent.split(separator: ".")[0])! < Int($1.lastPathComponent.split(separator: ".")[0])! })
                                         .map({ $0.path })
-                                    print(self.chapter.downloadedImages)
                                     mangaHVM.saveMangas()
                                 }
                             }
