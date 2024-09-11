@@ -35,7 +35,7 @@ struct ChapterView: View {
                     }
                 } else {
                     ForEach(chapter.downloadedImages, id: \.self) { link in
-                        if let img = UIImage(contentsOfFile: documentsDirectory.appending(path:  link).path()) {
+                        if let img = UIImage(contentsOfFile: documentsDirectory.appending(path:  link).path(percentEncoded: false)) {
                             Image(uiImage: img)
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
