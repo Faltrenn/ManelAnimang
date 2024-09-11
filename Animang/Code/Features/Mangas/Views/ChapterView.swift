@@ -16,17 +16,28 @@ struct ChapterView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-                ForEach(chapter.imagesURL, id: \.self) { link in
-                    AsyncImage(url: URL(string: link)) { phase in
-                        if let image = phase.image {
-                            image
+                if chapter.downloadedImages.isEmpty {
+                    ForEach(chapter.imagesURL, id: \.self) { link in
+                        AsyncImage(url: URL(string: link)) { phase in
+                            if let image = phase.image {
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(maxWidth: .infinity)
+                            } else if phase.error != nil {
+                                Color.red
+                            } else {
+                                ProgressView()
+                            }
+                        }
+                    }
+                } else {
+                    ForEach(chapter.downloadedImages, id: \.self) { link in
+                        if let img = UIImage(contentsOfFile: link.removingPercentEncoding!) {
+                            Image(uiImage: img)
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(maxWidth: .infinity)
-                        } else if phase.error != nil {
-                            Color.red
-                        } else {
-                            ProgressView()
                         }
                     }
                 }

@@ -61,7 +61,9 @@ class Manga: ObservableObject, Decodable, Encodable {
                     self.title = title
                     self.imageLink = image
                     self.description = description
-                    self.chapters = chapters
+                    if self.chapters.isEmpty {
+                        self.chapters = chapters
+                    }
                     vm.saveMangas()
                 }
             } catch {
@@ -76,6 +78,7 @@ class Chapter: ObservableObject, Encodable, Decodable {
     let link: String
     
     @Published var imagesURL: [String] = []
+    @Published var downloadedImages: [String] = []
     
     init(title: String, link: String) {
         self.title = title
@@ -87,6 +90,7 @@ class Chapter: ObservableObject, Encodable, Decodable {
         try container.encode(title, forKey: .title)
         try container.encode(link, forKey: .link)
         try container.encode(imagesURL, forKey: .imagesURL)
+        try container.encode(downloadedImages, forKey: .downloadedImages)
     }
     
     required init(from decoder: Decoder) throws {
@@ -94,10 +98,11 @@ class Chapter: ObservableObject, Encodable, Decodable {
         self.title = try container.decode(String.self, forKey: .title)
         self.link = try container.decode(String.self, forKey: .link)
         self.imagesURL = try container.decode([String].self, forKey: .imagesURL)
+        self.downloadedImages = try container.decode([String].self, forKey: .downloadedImages)
     }
     
     enum CodingKeys: String, CodingKey {
-        case title, link, imagesURL
+        case title, link, imagesURL, downloadedImages
     }
     
     func refresh(selector: MangaSelector, vm: MangaHomeViewModel) {
