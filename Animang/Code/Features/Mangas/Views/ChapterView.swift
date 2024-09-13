@@ -18,7 +18,6 @@ struct ChapterView: View {
         ScrollView {
             VStack(spacing: 0) {
                 if chapter.downloadedImages.isEmpty {
-                    Text("\(chapter.imagesURL.count) \(chapter.imagesURL)")
                     ForEach(chapter.imagesURL, id: \.self) { link in
                         AsyncImage(url: URL(string: link)) { phase in
                             if let image = phase.image {
