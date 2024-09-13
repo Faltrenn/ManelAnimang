@@ -33,29 +33,27 @@ class MangaHomeViewModel: ViewModel {
     }
     
     func addManga(media: Media) {
-        if let url = URL(string: media.link) {
-            URLSession.shared.dataTask(with: url) { data, response, error in
-                if error == nil, let data = data, let html = String(data: data, encoding: .utf8) {
-                    do {
+        self.mangas.append(Manga(media: media, description: "", chapters: []))
+        self.saveMangas()
+//        if let url = URL(string: media.link) {
+//            URLSession.shared.dataTask(with: url) { data, response, error in
+//                if error == nil, let data = data, let html = String(data: data, encoding: .utf8) {
+//                    do {
 //                        let parse = try SwiftSoup.parse(html)
-//                        let name = try parse.select("div[class=post-title]").first()?.text() ?? ""
 //                        let altName = try parse.select("div[class=post-title]").first()?.text() ?? ""
-//                        let imageLink = try parse.select("div[class=summary_image] a img").attr("data-src")
 //                        let genres = try parse.select("div[class=genres-content]").first()?.text() ?? ""
 //                        let postStatus = try parse.select("div[class=post-status] div div[class=summary-content]")
 //                        let launch = try postStatus[0].text()
 //                        let status = try postStatus[1].text()
 //                        let score = try parse.select("div[class=post-total-rating allow_vote] div[class=score font-meta total_votes]").text()
-                        DispatchQueue.main.async {
-                            self.mangas.append(Manga(media: media, description: "", chapters: []))
-                            self.saveMangas()
-                        }
-                    } catch {
-                        print("ERROR: ", error)
-                    }
-                }
-            }.resume()
-        }
+//                        DispatchQueue.main.async {
+//                        }
+//                    } catch {
+//                        print("ERROR: ", error)
+//                    }
+//                }
+//            }.resume()
+//        }
     }
     
     func hasManga(manga: Manga) -> Bool {
@@ -74,6 +72,14 @@ class MangaHomeViewModel: ViewModel {
     func saveMangas() {
         if let encoded = try? JSONEncoder().encode(mangas) {
             UserDefaults.standard.set(encoded, forKey: "mangas")
+        }
+    }
+    
+    func reset() {
+        mangas.removeAll()
+        
+        if UserDefaults.standard.data(forKey: "mangas") != nil {
+            UserDefaults.standard.removeObject(forKey: "mangas")
         }
     }
 }

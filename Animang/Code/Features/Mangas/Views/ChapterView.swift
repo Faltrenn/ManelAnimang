@@ -10,10 +10,9 @@ import SwiftSoup
 
 struct ChapterView: View {
     @ObservedObject var chapter: Chapter
-    let mangaSelector: MangaSelector
     @EnvironmentObject var mangaHVM: MangaHomeViewModel
-    
-    let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+    let mangaSelector: MangaSelector
+    let docsDir = getDocumentsDirectory()
     
     var body: some View {
         ScrollView {
@@ -35,7 +34,7 @@ struct ChapterView: View {
                     }
                 } else {
                     ForEach(chapter.downloadedImages, id: \.self) { link in
-                        if let img = UIImage(contentsOfFile: documentsDirectory.appending(path:  link).path(percentEncoded: false)) {
+                        if let img = UIImage(contentsOfFile: docsDir.appending(path:  link).path(percentEncoded: false)) {
                             Image(uiImage: img)
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
@@ -52,7 +51,9 @@ struct ChapterView: View {
 }
 
 #Preview {
-    ChapterView(chapter: Chapter(title: "", link: "https://leitordemanga.com/ler-manga/hunter-x-hunter/portugues-pt-br/capitulo-400/p/1"), mangaSelector: .leitorDeManga)
-        .environmentObject(MangaHomeViewModel())
+    @ObservedObject var mangaHVM = MangaHomeViewModel()
+    
+    return ChapterView(chapter: mangaHVM.mangas.first!.chapters.first!, mangaSelector: .leitorDeManga)
+        .environmentObject(mangaHVM)
 }
  

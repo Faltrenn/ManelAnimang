@@ -12,7 +12,7 @@ struct NamerTag: View {
     let title: String
     let value: String
     
-    init(_ title: String, _ value: String) {
+    init(title: String, value: String) {
         self.title = title
         self.value = value
     }
