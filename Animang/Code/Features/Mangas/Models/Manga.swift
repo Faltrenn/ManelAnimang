@@ -62,17 +62,23 @@ class Manga: ObservableObject, Decodable, Encodable {
                 for element in elements {
                     let title = try element.text()
                     let link = try element.attr("href")
-                    if !chapters.contains(where: { $0.link == link }) {
-                        chapters.append(Chapter(title: title, link: link))
-                    }
+                    chapters.append(Chapter(title: title, link: link))
                 }
                 DispatchQueue.main.async {
                     self.title = title
                     self.imageLink = image
                     self.description = description
-                    if self.chapters.isEmpty {
-                        self.chapters = chapters
+                    for chapter in chapters {
+                        if !self.chapters.contains(where: { $0.link == chapter.link }) {
+                            if let chap = self.chapters.first(where: { $0.title == chapter.title }) {
+                                chap.link = chapter.link
+                            } else {
+                                self.chapters.append(chapter)
+                            }
+                        }
                     }
+                    
+                    self.chapters.sort { Double($0.title.split(separator: " ")[1])! > Double($1.title.split(separator: " ")[1])! }
                     vm.saveMangas()
                 }
             } catch {
@@ -85,8 +91,13 @@ class Manga: ObservableObject, Decodable, Encodable {
 class Chapter: ObservableObject, Encodable, Decodable {
     @Published var imagesURL: [String] = []
     @Published var downloadedImages: [String] = []
-    let title: String
-    let link: String
+    var title: String
+    var link: String
+    
+    init(title: String, link: String) {
+        self.title = title
+        self.link = link
+    }
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
@@ -113,10 +124,14 @@ class Chapter: ObservableObject, Encodable, Decodable {
             do {
                 let parse = try SwiftSoup.parse(html)
                 let elements = try parse.select("div[class=page-break] img")
-                let fetchedImages = try elements.map({ try $0.attr("data-src").replacing("\n", with: "").replacing("http", with: "https") })
+                let fetchedImages = try elements.map({
+                    return ($0.hasAttr("data-src") ? try $0.attr("data-src") : try $0.attr("src")).replacing("\n", with: "").replacing("http", with: "https")
+                })
                 
                 DispatchQueue.main.async {
-                    self.imagesURL = fetchedImages
+                    if self.imagesURL != fetchedImages {
+                        self.imagesURL = fetchedImages
+                    }
                     vm.saveMangas()
                 }
             } catch {

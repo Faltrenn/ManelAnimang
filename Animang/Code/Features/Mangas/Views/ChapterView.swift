@@ -18,6 +18,7 @@ struct ChapterView: View {
         ScrollView {
             VStack(spacing: 0) {
                 if chapter.downloadedImages.isEmpty {
+                    Text("\(chapter.imagesURL.count) \(chapter.imagesURL)")
                     ForEach(chapter.imagesURL, id: \.self) { link in
                         AsyncImage(url: URL(string: link)) { phase in
                             if let image = phase.image {
@@ -52,6 +53,7 @@ struct ChapterView: View {
 
 #Preview {
     @ObservedObject var mangaHVM = MangaHomeViewModel()
+    mangaHVM.mangas.first!.chapters.first!.refresh(selector: .leitorDeManga, vm: mangaHVM)
     
     return ChapterView(chapter: mangaHVM.mangas.first!.chapters.first!, mangaSelector: .leitorDeManga)
         .environmentObject(mangaHVM)

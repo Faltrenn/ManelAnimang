@@ -12,7 +12,6 @@
 		CC3181892C6A824100049255 /* AnimeHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3181882C6A824100049255 /* AnimeHomeView.swift */; };
 		CC31818C2C6A97F600049255 /* EpisodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC31818B2C6A97F600049255 /* EpisodeView.swift */; };
 		CC57FB3E2C6D52C700AD2D5F /* AnimeSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC57FB3D2C6D52C700AD2D5F /* AnimeSearchView.swift */; };
-		CC77C4822BA665EE00A2F6C4 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = CC77C4812BA665EE00A2F6C4 /* SwiftSoup */; };
 		CC7C16832C5D323900BF6CF7 /* MangaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7C16822C5D323900BF6CF7 /* MangaView.swift */; };
 		CC8C10792C6BF0280046E98A /* EpisodeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8C10782C6BF0280046E98A /* EpisodeModel.swift */; };
 		CC8C107C2C6BF4650046E98A /* AnimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8C107B2C6BF4650046E98A /* AnimeView.swift */; };
@@ -20,6 +19,7 @@
 		CC8DF65B2BA1FC1500155657 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8DF65A2BA1FC1500155657 /* ContentView.swift */; };
 		CC8DF65D2BA1FC1600155657 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC8DF65C2BA1FC1600155657 /* Assets.xcassets */; };
 		CC8DF6612BA1FC1600155657 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC8DF6602BA1FC1600155657 /* Preview Assets.xcassets */; };
+		CC9D623A2C94CA1C004361F5 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = CC9D62392C94CA1C004361F5 /* SwiftSoup */; };
 		CCAA56E92C5FE79A00BC756E /* MangaHomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAA56E82C5FE79A00BC756E /* MangaHomeViewModel.swift */; };
 		CCAA56EB2C5FE7E100BC756E /* MangaHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAA56EA2C5FE7E100BC756E /* MangaHome.swift */; };
 		CCC1EAF52C8F79670024101C /* SearchMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1EAF42C8F79670024101C /* SearchMedia.swift */; };
@@ -55,7 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CC77C4822BA665EE00A2F6C4 /* SwiftSoup in Frameworks */,
+				CC9D623A2C94CA1C004361F5 /* SwiftSoup in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,7 +225,7 @@
 			);
 			name = Animang;
 			packageProductDependencies = (
-				CC77C4812BA665EE00A2F6C4 /* SwiftSoup */,
+				CC9D62392C94CA1C004361F5 /* SwiftSoup */,
 			);
 			productName = "Manganel&Animes";
 			productReference = CC8DF6552BA1FC1500155657 /* Animang.app */;
@@ -256,7 +256,7 @@
 			);
 			mainGroup = CC8DF64C2BA1FC1500155657;
 			packageReferences = (
-				CC77C4802BA665EE00A2F6C4 /* XCRemoteSwiftPackageReference "SwiftSoup" */,
+				CC9D62382C94CA1C004361F5 /* XCRemoteSwiftPackageReference "SwiftSoup" */,
 			);
 			productRefGroup = CC8DF6562BA1FC1500155657 /* Products */;
 			projectDirPath = "";
@@ -438,6 +438,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Animang/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Animes&Mangas";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -479,6 +481,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Animang/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Animes&Mangas";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -529,20 +533,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		CC77C4802BA665EE00A2F6C4 /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
+		CC9D62382C94CA1C004361F5 /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scinfu/SwiftSoup";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.7.1;
+				minimumVersion = 2.7.5;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		CC77C4812BA665EE00A2F6C4 /* SwiftSoup */ = {
+		CC9D62392C94CA1C004361F5 /* SwiftSoup */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CC77C4802BA665EE00A2F6C4 /* XCRemoteSwiftPackageReference "SwiftSoup" */;
+			package = CC9D62382C94CA1C004361F5 /* XCRemoteSwiftPackageReference "SwiftSoup" */;
 			productName = SwiftSoup;
 		};
 /* End XCSwiftPackageProductDependency section */

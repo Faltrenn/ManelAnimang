@@ -22,7 +22,6 @@ struct ChapterCard: View {
     
     var body: some View {
         VStack {
-            Text(chapter.link)
             Text(chapter.title)
                 .frame(maxWidth: .infinity)
                 .padding()
@@ -119,6 +118,8 @@ struct MangaView: View {
     var mangaHVM = MangaHomeViewModel()
 //    mangaHVM.reset()
 //    mangaHVM.mangas.first!.chapters.removeAll()
+//    mangaHVM.mangas.first!.chapters.removeFirst()
+//    mangaHVM.mangas.first!.chapters.first!.link = ""
     
     return NavigationStack {
         MangaView(manga: mangaHVM.mangas.first!, mangaSelector: .leitorDeManga)
