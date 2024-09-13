@@ -6,7 +6,12 @@
 //
 
 import Foundation
+import SwiftUI
 import SwiftSoup
+
+func getDocumentsDirectory() -> URL {
+    FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+}
 
 class Manga: ObservableObject, Decodable, Encodable {
     @Published var title: String
@@ -55,7 +60,11 @@ class Manga: ObservableObject, Decodable, Encodable {
                 let elements = try parse.select(selector.chapters)
                 var chapters: [Chapter] = []
                 for element in elements {
-                    try chapters.append(Chapter(title: element.text(), link: element.attr("href")))
+                    let title = try element.text()
+                    let link = try element.attr("href")
+                    if !chapters.contains(where: { $0.link == link }) {
+                        chapters.append(Chapter(title: title, link: link))
+                    }
                 }
                 DispatchQueue.main.async {
                     self.title = title
@@ -74,16 +83,10 @@ class Manga: ObservableObject, Decodable, Encodable {
 }
 
 class Chapter: ObservableObject, Encodable, Decodable {
-    let title: String
-    let link: String
-    
     @Published var imagesURL: [String] = []
     @Published var downloadedImages: [String] = []
-    
-    init(title: String, link: String) {
-        self.title = title
-        self.link = link
-    }
+    let title: String
+    let link: String
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
@@ -106,25 +109,22 @@ class Chapter: ObservableObject, Encodable, Decodable {
     }
     
     func refresh(selector: MangaSelector, vm: MangaHomeViewModel) {
-        if imagesURL.isEmpty {
-            fetch(link: "\(link)?style=list") { html in
-                do {
-                    let parse = try SwiftSoup.parse(html)
-                    let elements = try parse.select("div[class=page-break] img")
-                    let fetchedImages = try elements.map({ try $0.attr("data-src").replacing("\n", with: "").replacing("http", with: "https") })
-                    
-                    DispatchQueue.main.async {
-                        self.imagesURL = fetchedImages
-                        vm.saveMangas()
-                    }
-                } catch {
-                    print("ERROR: ", error)
+        fetch(link: "\(link)?style=list") { html in
+            do {
+                let parse = try SwiftSoup.parse(html)
+                let elements = try parse.select("div[class=page-break] img")
+                let fetchedImages = try elements.map({ try $0.attr("data-src").replacing("\n", with: "").replacing("http", with: "https") })
+                
+                DispatchQueue.main.async {
+                    self.imagesURL = fetchedImages
+                    vm.saveMangas()
                 }
+            } catch {
+                print("ERROR: ", error)
             }
         }
     }
 }
-
 
 struct MangaSelector {
     static let leitorDeManga = MangaSelector(
@@ -138,4 +138,66 @@ struct MangaSelector {
     let description: String
     let chapters: String
     let chapterImages: String
+}
+
+class DownloadManager: ObservableObject {
+    @Published var progress = 0.0
+    @Published var downloading = false
+    @ObservedObject var manga: Manga
+    @ObservedObject var chapter: Chapter
+    var downloadedImages: [URL] = []
+    let docsDir: URL = getDocumentsDirectory()
+    let chapterDir: URL
+    
+    init(manga: Manga, chapter: Chapter) {
+        self.manga = manga
+        self.chapter = chapter
+        self.chapterDir = URL(filePath: "Mangas").appending(path: manga.title).appending(path: chapter.title)
+    }
+    
+    func download(mangaHVM: MangaHomeViewModel) {
+        try? FileManager.default.removeItem(at: self.docsDir.appending(path: chapterDir.path(percentEncoded: false)))
+        try? FileManager.default.createDirectory(at: self.docsDir.appending(path: chapterDir.path(percentEncoded: false)), withIntermediateDirectories: true)
+        
+        progress = 0
+        downloadedImages = []
+        withAnimation {
+            downloading = true
+        }
+        
+        for (index, link) in chapter.imagesURL.enumerated() {
+            if let url = URL(string: link) {
+                URLSession.shared.downloadTask(with: url) { local, response, error in
+                    if let local = local {
+                        let fileDir = self.chapterDir.appending(path: "\(index).\(link.split(separator: ".").last ?? "")")
+                        do {
+                            try FileManager.default.moveItem(at: local, to: self.docsDir.appending(path: fileDir.path(percentEncoded: false)))
+                            self.downloadedImages.append(fileDir)
+                            DispatchQueue.main.async {
+                                withAnimation {
+                                    self.progress = Double(self.downloadedImages.count) / Double(self.chapter.imagesURL.count)
+                                }
+                                if self.progress == 1 {
+                                    withAnimation {
+                                        self.downloading = false
+                                    }
+                                    self.chapter.downloadedImages = self.downloadedImages
+                                        .sorted(by: { Int($0.lastPathComponent.split(separator: ".")[0])! < Int($1.lastPathComponent.split(separator: ".")[0])! })
+                                        .map({ $0.path })
+                                    mangaHVM.saveMangas()
+                                }
+                            }
+                        } catch {
+                            print("Error: ", error)
+                        }
+                    }
+                }.resume()
+            }
+        }
+    }
+    
+    func delete() {
+        try? FileManager.default.removeItem(at: self.docsDir.appending(path: chapterDir.path()))
+        chapter.downloadedImages = []
+    }
 }

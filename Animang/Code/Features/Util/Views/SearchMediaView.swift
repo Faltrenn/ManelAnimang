@@ -48,9 +48,9 @@ struct MediaCard<VM: ViewModel>: View {
 }
 
 struct SearchMediaView<VM: ViewModel>: View {
-    @State var search = "a"
-    @State var medias: [Media] = []
     let selector: MediaSelector
+    @State var search = ""
+    @State var medias: [Media] = []
     @EnvironmentObject var vm: VM
     
     var body: some View {
@@ -58,6 +58,7 @@ struct SearchMediaView<VM: ViewModel>: View {
             HStack {
                 TextField("Pesquise pelo nome", text: $search)
                 Button("Pesquisar") {
+                    medias = []
                     searchMedia(search: search)
                 }
             }
@@ -70,14 +71,12 @@ struct SearchMediaView<VM: ViewModel>: View {
     }
     
     func searchMedia(search: String) {
-        medias = []
         if let url = URL(string: String(format: selector.site, search.searchFormat)) {
             URLSession.shared.dataTask(with: url) { data, response, error in
                 if error == nil, let data = data, let html = String(data: data, encoding: .utf8) {
                     do {
                         let parse = try SwiftSoup.parse(html)
-                        let elements = try parse.select(selector.elements)
-                        for element in elements {
+                        for element in try parse.select(selector.elements) {
                             let link = try element.select(selector.link).attr("href")
                             let imageLink = try element.select(selector.imageLink.0).attr("src")
                             let title = try element.select(selector.title.0).text()
