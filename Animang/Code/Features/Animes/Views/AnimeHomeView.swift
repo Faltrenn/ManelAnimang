@@ -19,24 +19,24 @@ struct AnimeHomeView: View {
                     Text("Adicionar")
                 }
                 
-//                List {
-//                    ForEach(mangaHomeVM.mangas, id: \.link) { manga in
-//                        ZStack {
-//                            NavigationLink(destination: MangaView(manga: manga, mangaSelector: .leitorDeManga)) {
-//                                EmptyView()
-//                            }.opacity(0.0)
-//                            MangaCard(manga: manga)
-//                                .swipeActions(edge: .leading) {
-//                                    Button("Remover", systemImage: "trash") {
-//                                        mangaHomeVM.removeManga(manga: manga)
-//                                    }
-//                                    .tint(.red)
-//                                }
-//                        }
-//                        .listRowSeparator(.hidden)
-//                    }
-//                }
-//                .listStyle(.plain)
+                List { 
+                    ForEach(animeHVM.animes, id: \.link) { anime in
+                        ZStack {
+                            NavigationLink(destination: AnimeView(anime: anime, selector: .megaflix)) {
+                                EmptyView()
+                            }.opacity(0.0)
+                            AnimeCard(anime: anime)
+                                .swipeActions(edge: .leading) {
+                                    Button("Remover", systemImage: "trash") {
+                                        animeHVM.removeAnime(anime: anime)
+                                    }
+                                    .tint(.red)
+                                }
+                        }
+                        .listRowSeparator(.hidden)
+                    }
+                }
+                .listStyle(.plain)
             }
         }
         .environmentObject(animeHVM)

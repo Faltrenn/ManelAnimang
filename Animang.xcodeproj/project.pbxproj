@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CC0E114B2C95286900ABACB2 /* Anime.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0E114A2C95286900ABACB2 /* Anime.swift */; };
 		CC15B33D2C5E734400640521 /* MangaHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC15B33C2C5E734400640521 /* MangaHomeView.swift */; };
 		CC25CF872C75090C009D8966 /* SearchMediaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC25CF862C75090C009D8966 /* SearchMediaView.swift */; };
 		CC3181892C6A824100049255 /* AnimeHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3181882C6A824100049255 /* AnimeHomeView.swift */; };
@@ -29,6 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CC0E114A2C95286900ABACB2 /* Anime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Anime.swift; sourceTree = "<group>"; };
 		CC15B33C2C5E734400640521 /* MangaHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaHomeView.swift; sourceTree = "<group>"; };
 		CC25CF862C75090C009D8966 /* SearchMediaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMediaView.swift; sourceTree = "<group>"; };
 		CC3181882C6A824100049255 /* AnimeHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimeHomeView.swift; sourceTree = "<group>"; };
@@ -197,6 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				CC8C10782C6BF0280046E98A /* EpisodeModel.swift */,
+				CC0E114A2C95286900ABACB2 /* Anime.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -298,6 +301,7 @@
 				CC8DF65B2BA1FC1500155657 /* ContentView.swift in Sources */,
 				CC7C16832C5D323900BF6CF7 /* MangaView.swift in Sources */,
 				CC8C107C2C6BF4650046E98A /* AnimeView.swift in Sources */,
+				CC0E114B2C95286900ABACB2 /* Anime.swift in Sources */,
 				CC31818C2C6A97F600049255 /* EpisodeView.swift in Sources */,
 				CCAA56E92C5FE79A00BC756E /* MangaHomeViewModel.swift in Sources */,
 				CC9D623D2C94D888004361F5 /* AnimeHomeViewModel.swift in Sources */,

@@ -13,7 +13,7 @@ struct AnimeCard: View {
     
     var body: some View {
         VStack {
-            Text(anime.name)
+            Text(anime.title)
                 .bold()
                 .multilineTextAlignment(.center)
             VStack {
@@ -44,7 +44,7 @@ struct AnimeSearchView: View {
             }
             .padding()
             Grid {
-                ForEach(searchedAnimes, id: \.animeLink) { anime in
+                ForEach(searchedAnimes, id: \.link) { anime in
                     GridRow {
                         AnimeCard(anime: anime)
                             .listRowSeparator(.hidden)
@@ -68,7 +68,7 @@ struct AnimeSearchView: View {
     
     func searchAnime(search: String) {
         searchedAnimes = []
-        if let url = URL(string: "https://www.aniture-pt.com.br/search?q=\(search.searchFormat)") {
+        if let url = URL(string: "https://www.aniture-pt.com.br/search?q=\(String(describing: search.searchFormat))") {
             URLSession.shared.dataTask(with: url) { data, response, error in
                 if error == nil, let data = data, let html = String(data: data, encoding: .utf8) {
                     do {
@@ -78,9 +78,9 @@ struct AnimeSearchView: View {
                             let animeLink = try manga.select("a").attr("href")
                             let imageLink = try manga.select("img").attr("src")
                             let name = try manga.select("h2[class=post-title entry-title]").text()
-                            DispatchQueue.main.async {
-                                self.searchedAnimes.append(Anime(name: name, animeLink: animeLink, imageLink: imageLink, description: "", episodesLinks: []))
-                            }
+//                            DispatchQueue.main.async {
+//                                self.searchedAnimes.append(Anime(name: name, animeLink: animeLink, imageLink: imageLink, description: "", episodesLinks: []))
+//                            }
                         }
                     } catch {
                         print("ERROR: ", error)
