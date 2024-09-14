@@ -21,7 +21,7 @@ enum Pages: CaseIterable {
 }
 
 struct ContentView: View {
-    @State var page: Pages = .manga
+    @State var page: Pages = .anime
     
     var body: some View {
         ZStack(alignment: .bottom){
@@ -30,7 +30,7 @@ struct ContentView: View {
                 case .manga:
                     MangaHomeView()
                 case .anime:
-                    AnimeSearchView()
+                    AnimeHomeView()
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)

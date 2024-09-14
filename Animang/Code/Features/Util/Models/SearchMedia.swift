@@ -8,8 +8,12 @@
 import Foundation
 
 extension String {
-    var searchFormat: String {
-        self.replacingOccurrences(of: " ", with: "+")
+    func searchFormat(separator: String) -> String {
+        self.replacingOccurrences(of: " ", with: separator)
+    }
+    
+    func fixedUrl() -> String {
+        return self.starts(with: "//") ? "https:" + self : self
     }
 }
 

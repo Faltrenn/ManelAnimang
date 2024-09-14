@@ -8,8 +8,38 @@
 import SwiftUI
 
 struct AnimeHomeView: View {
+    @ObservedObject var animeHVM = AnimeHomeViewModel()
+    
     var body: some View {
-        Text("Hello, World!")
+        NavigationStack {
+            VStack {
+                NavigationLink {
+                    SearchMediaView<AnimeHomeViewModel>(selector: .megaflix)
+                } label: {
+                    Text("Adicionar")
+                }
+                
+//                List {
+//                    ForEach(mangaHomeVM.mangas, id: \.link) { manga in
+//                        ZStack {
+//                            NavigationLink(destination: MangaView(manga: manga, mangaSelector: .leitorDeManga)) {
+//                                EmptyView()
+//                            }.opacity(0.0)
+//                            MangaCard(manga: manga)
+//                                .swipeActions(edge: .leading) {
+//                                    Button("Remover", systemImage: "trash") {
+//                                        mangaHomeVM.removeManga(manga: manga)
+//                                    }
+//                                    .tint(.red)
+//                                }
+//                        }
+//                        .listRowSeparator(.hidden)
+//                    }
+//                }
+//                .listStyle(.plain)
+            }
+        }
+        .environmentObject(animeHVM)
     }
 }
 
