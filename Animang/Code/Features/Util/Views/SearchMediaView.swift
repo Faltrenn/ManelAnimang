@@ -85,8 +85,10 @@ struct SearchMediaView<VM: ViewModel>: View {
     }
     
     func searchMedia(search: String) {
-        fetch(link: String(format: selector.site, search.searchFormat(separator: selector.separator))) { html in
+        Task {
             do {
+                let html = try await fetch(link: String(format: selector.site, search.searchFormat(separator: selector.separator)))
+                
                 let parse = try SwiftSoup.parse(html)
                 for element in try parse.select(selector.elements) {
                     let link = try element.select(selector.link).attr("href")
@@ -97,7 +99,7 @@ struct SearchMediaView<VM: ViewModel>: View {
                     }
                 }
             } catch {
-                print("ERROR: ", error)
+                print("Error: ", error.localizedDescription)
             }
         }
     }

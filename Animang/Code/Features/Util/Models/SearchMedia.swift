@@ -82,31 +82,25 @@ class Media: ObservableObject, Encodable, Decodable {
     }
 }
 
-func fetch(request: URLRequest, completion: @escaping (String) throws -> Void) {
-    URLSession.shared.dataTask(with: request) { data, response, error in
-        if error == nil, let data = data, let html = String(data: data, encoding: .utf8) {
-            do {
-                try completion(html)
-            } catch {
-                print("ERROR:", error)
-            }
-        } else {
-            print(error as Any)
-        }
-    }.resume()
+func fetch(request: URLRequest) async throws -> String {
+    let (data, _) = try await URLSession.shared.data(for: request)
+    guard let html = String(data: data, encoding: .utf8) else {
+        throw URLError(.badServerResponse)
+    }
+    return html
 }
 
-func fetch(link: String, completion: @escaping (String) -> Void) {
-    fetch(request: createRequest(link: link)!, completion: completion)
+func fetch(link: String) async throws -> String {
+    return try await fetch(request: createRequest(link: link))
 }
 
-func createRequest(link: String) -> URLRequest? {
+func createRequest(link: String) throws -> URLRequest {
     if let url = URL(string: link) {
         var request = URLRequest(url: url)
         request.setValue("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36", forHTTPHeaderField: "User-Agent")
         return request
     }
-    return nil
+    throw URLError(.badURL)
 }
 
 func getDocumentsDirectory() -> URL {

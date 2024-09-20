@@ -39,19 +39,23 @@ class Manga: Media {
     }
     
     func refresh(selector: MangaSelector, vm: MangaHomeViewModel) {
-        fetch(link: link) { html in
+        Task {
             do {
+                let html = try await fetch(link: link)
                 let parse = try SwiftSoup.parse(html)
                 let title = try parse.select(selector.mediaSelector.title.1).first()?.text() ?? ""
                 let image = try parse.select(selector.mediaSelector.imageLink.1).first()?.attr("data-src") ?? ""
                 let description = try parse.select(selector.description).first()?.text() ?? ""
                 let elements = try parse.select(selector.chapters)
-                var chapters: [Chapter] = []
+                var newChapters: [Chapter] = []
                 for element in elements {
                     let title = try element.text()
                     let link = try element.attr("href")
-                    chapters.append(Chapter(title: title, link: link))
+                    newChapters.append(Chapter(title: title, link: link))
                 }
+                
+                let chapters = newChapters
+                
                 DispatchQueue.main.async {
                     self.title = title
                     self.imageLink = image
@@ -108,8 +112,10 @@ class Chapter: ObservableObject, Encodable, Decodable {
     }
     
     func refresh(selector: MangaSelector, vm: MangaHomeViewModel) {
-        fetch(link: "\(link)?style=list") { html in
+        Task {
             do {
+                let html = try await fetch(link: "\(link)?style=list")
+                
                 let parse = try SwiftSoup.parse(html)
                 let elements = try parse.select("div[class=page-break] img")
                 let fetchedImages = try elements.map({
@@ -123,7 +129,7 @@ class Chapter: ObservableObject, Encodable, Decodable {
                     vm.saveMangas()
                 }
             } catch {
-                print("ERROR: ", error)
+                print("error: ", error.localizedDescription)
             }
         }
     }

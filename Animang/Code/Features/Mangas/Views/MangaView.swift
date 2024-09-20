@@ -115,7 +115,7 @@ struct MangaView: View {
 }
 
 #Preview {
-    var mangaHVM = MangaHomeViewModel()
+    @ObservedObject var mangaHVM = MangaHomeViewModel()
 //    mangaHVM.reset()
 //    mangaHVM.mangas.first!.chapters.removeAll()
 //    mangaHVM.mangas.first!.chapters.removeFirst()

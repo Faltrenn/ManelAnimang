@@ -40,8 +40,10 @@ struct AnimeView: View {
             }
         }
         .onAppear {
-            fetch(link: anime.link) { res in
+            Task {
                 do {
+                    let res = try await fetch(link: anime.link)
+                    
                     let parse = try SwiftSoup.parse(res)
                     var episodesLinks: [String] = []
                     if try parse.select(selector.episodesVideos.1).count > 0 {

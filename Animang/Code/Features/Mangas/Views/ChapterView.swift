@@ -46,7 +46,13 @@ struct ChapterView: View {
         }
         .onAppear {
             chapter.refresh(selector: .leitorDeManga, vm: mangaHVM)
+            
         }
+    }
+    
+    func loadImageByURL(_ url: URL) async throws -> UIImage {
+        let (data, _) = try await URLSession.shared.data(from: url)
+        return UIImage(data: data) ?? UIImage()
     }
 }
 
