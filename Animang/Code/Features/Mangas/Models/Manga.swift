@@ -9,9 +9,6 @@ import Foundation
 import SwiftUI
 import SwiftSoup
 
-func getDocumentsDirectory() -> URL {
-    FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-}
 
 class Manga: Media {
     @Published var description: String

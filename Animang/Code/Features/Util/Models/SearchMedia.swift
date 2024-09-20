@@ -13,7 +13,30 @@ extension String {
     }
     
     func fixedUrl() -> String {
-        return self.starts(with: "//") ? "https:" + self : self
+        if self.hasPrefix("//") {
+            return "https:" + self
+        } else if self.hasPrefix("/") {
+            return "https:/" + self
+        }
+        return self
+    }
+    
+    var domain: String? {
+        var formattedLink = self.fixedUrl()
+        if !formattedLink.hasPrefix("http://") && !formattedLink.hasPrefix("https://") {
+            formattedLink = "https://" + formattedLink
+        }
+        
+        if let url = URLComponents(string: formattedLink), let host = url.host {
+            let components = host.components(separatedBy: ".")
+            if components.count > 2 && components[0] == "www" {
+                return components[1]
+            } else if components.count > 1 {
+                return components[0]
+            }
+        }
+        
+        return nil
     }
 }
 
@@ -84,4 +107,8 @@ func createRequest(link: String) -> URLRequest? {
         return request
     }
     return nil
+}
+
+func getDocumentsDirectory() -> URL {
+    FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
 }

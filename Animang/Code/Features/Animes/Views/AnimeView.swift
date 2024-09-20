@@ -12,7 +12,7 @@ struct EpisodeCard: View {
     let link: String
     var body: some View {
         NavigationLink {
-            EpisodeView(link: link)
+            EpisodeView(link: link, selector: .megaflix)
         } label: {
             Text(link)
         }
@@ -43,9 +43,13 @@ struct AnimeView: View {
             fetch(link: anime.link) { res in
                 do {
                     let parse = try SwiftSoup.parse(res)
-                    let episodes = try parse.select(selector.episodes)
-                    let episodesLinks: [String] = try episodes.map { try $0.select(selector.episodesVideos).attr("href") }
-                    
+                    var episodesLinks: [String] = []
+                    if try parse.select(selector.episodesVideos.1).count > 0 {
+                        episodesLinks.append(anime.link)
+                    } else {
+                        let episodes = try parse.select(selector.episodes)
+                        episodesLinks = try episodes.map { try $0.select(selector.episodesVideos.0).attr("href") }
+                    }
                     DispatchQueue.main.async {
                         anime.episodes = episodesLinks
                     }

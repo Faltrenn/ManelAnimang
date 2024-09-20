@@ -11,12 +11,12 @@ struct AnimeSelector {
     static let megaflix = AnimeSelector(
         mediaSelector: .megaflix,
         episodes: "ul[id=episode_by_temp] li",
-        episodesVideos: "article a"
+        episodesVideos: ("article a", "aside[class=video-player aa-cn] div a")
     )
     
     let mediaSelector: MediaSelector
     let episodes: String
-    let episodesVideos: String
+    let episodesVideos: (String, String)
 }
 
 class Anime: Media {
